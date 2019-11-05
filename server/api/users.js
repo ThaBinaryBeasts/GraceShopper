@@ -1,6 +1,6 @@
-const router = require('express').Router()
-const {User} = require('../db/models')
-module.exports = router
+const router = require('express').Router();
+const {User} = require('../db/models');
+module.exports = router;
 
 router.get('/', async (req, res, next) => {
   try {
@@ -29,5 +29,6 @@ router.get('/:id', async (req, res, next) => {
     }
   } catch (error) {
     next(error)
+
   }
-})
+});

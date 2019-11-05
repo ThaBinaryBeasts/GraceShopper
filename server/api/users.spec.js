@@ -22,6 +22,7 @@ describe('User routes', () => {
         firstName: codysFirstName,
         lastName: codysLastName,
         password: codysPassword
+
       });
     });
 
