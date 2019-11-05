@@ -9,9 +9,8 @@ export class AllItems extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
-      <div>
+      <div className="allItems">
         {this.props.items[0] ? (
           <div>
             {this.props.items.map(item => {
