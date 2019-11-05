@@ -22,7 +22,7 @@ const getItem = item => ({type: GET_SELECTED_ITEM, item});
  */
 export const getAllItems = () => async dispatch => {
   try {
-    const {data} = await axios.get('/items');
+    const {data} = await axios.get('/api/items');
     dispatch(getItems(data || defaultItemList));
   } catch (err) {
     console.error(err);
@@ -31,7 +31,7 @@ export const getAllItems = () => async dispatch => {
 
 export const getSelectedItem = id => async dispatch => {
   try {
-    const {data} = await axios.get(`/items/${id}`);
+    const {data} = await axios.get(`/api/items/${id}`);
     dispatch(getItem(data || defaultItemList));
   } catch (err) {
     console.error(err);
