@@ -28,4 +28,4 @@ const Item = db.define('item', {
   }
 });
 
-module.export = Item;
+module.exports = Item;

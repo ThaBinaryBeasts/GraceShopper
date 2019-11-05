@@ -16,4 +16,4 @@ const Order = db.define('order', {
   }
 });
 
-module.export = Order;
+module.exports = Order;
