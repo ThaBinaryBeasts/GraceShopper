@@ -3,8 +3,8 @@ const Item = require('./item');
 const Order = require('./order');
 
 // Associations:
+Order.belongsTo(User);
 User.hasMany(Order);
-Order.belongTo(User);
 
 Order.belongsToMany(Item);
 Item.belongsToMany(Order);
