@@ -16,13 +16,14 @@ describe('User routes', () => {
     const codysFirstName = 'cody';
     const codysLastName = 'codyLastName';
     const codysPassword = '123';
+    const codysFlag = 1;
     beforeEach(() => {
       return User.create({
         email: codysEmail,
         firstName: codysFirstName,
         lastName: codysLastName,
-        password: codysPassword
-
+        password: codysPassword,
+        flag: codysFlag
       });
     });
 
