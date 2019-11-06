@@ -3,6 +3,8 @@
 
 body {
   background: url(https://www.deadwood.com/wp/wp-content/uploads/2018/09/big-whiskey_hero-image.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 .plate {
   width: 410px;
