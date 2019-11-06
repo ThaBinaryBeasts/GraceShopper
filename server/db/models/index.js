@@ -13,5 +13,6 @@ Item.belongsToMany(Order, {through: ItemOrders});
 module.exports = {
   User,
   Item,
-  Order
+  Order,
+  ItemOrders
 };
