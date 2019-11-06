@@ -37,7 +37,7 @@ const Item = db.define('item', {
     }
   },
   region: {
-    type: Sequelize.ENUM('United States , Scotland , Ireland , Japon , Canada')
+    type: Sequelize.ENUM('United States , Scotland , Ireland , Japan , Canada')
   }
 });
 
