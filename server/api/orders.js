@@ -31,6 +31,10 @@ router.get('/history/:userId', async (req, res, next) => {
   }
 });
 
+const calculateTotal = (price, quantity) => {
+  return Math.round(price * quantity * 100) / 100;
+};
+
 router.post('/:userId/addcart', async (req, res, next) => {
   try {
     const itemId = req.body.itemId;
@@ -41,21 +45,31 @@ router.post('/:userId/addcart', async (req, res, next) => {
       where: {
         userId: req.params.userId,
         status: 'pending'
-      },
-      defaults: req.body
+      }
     });
 
     const order = cart[0];
     const orderId = order.id;
 
     //Push item refference and quantity into joint table(itemOrder);
-    await ItemOrders.create({itemId, quantity, orderId});
+    const addingQuantity = await ItemOrders.findOrCreate({
+      where: {
+        orderId: orderId,
+        itemId: itemId
+      },
+      defaults: {itemId, quantity, orderId}
+    });
+
+    if (!addingQuantity[1]) {
+      addingQuantity[0].quantity = quantity;
+      await addingQuantity[0].save();
+    }
 
     // Get specific Item to retrieve item price
     const item = await Item.findByPk(itemId);
 
     // updating total in user order and rounding it to $0.00
-    order.total += Math.round(item.price * quantity * 100) / 100;
+    order.total += calculateTotal(item.price, quantity);
     await order.save();
 
     //requesting our full order
