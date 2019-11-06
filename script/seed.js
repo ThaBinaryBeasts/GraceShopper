@@ -30,6 +30,90 @@ async function seed() {
   ]);
   const items = await Promise.all([
     Item.create({
+      name: 'Pappy Van Winkle 10 Yr.',
+      description: 'meh',
+      price: 699.99,
+      stock: 99,
+      region: 'United States'
+    }),
+    Item.create({
+      name: 'European Whiskey',
+      description: 'hey, this is pretty good',
+      price: 3.0,
+      stock: 1,
+      region: 'Europe'
+    }),
+    Item.create({
+      name: 'Japanese Whiskey',
+      description: 'it buuurrrnns my throat',
+      price: 74,
+      stock: 53,
+      region: 'Japan'
+    }),
+    Item.create({
+      name: 'Jamacian Whiskey',
+      description: 'straight from the island!',
+      price: 3249.573,
+      stock: 993,
+      region: 'Jamacia'
+    }),
+    Item.create({
+      name: 'US Whiskey',
+      description: 'meh',
+      price: 100.99,
+      stock: 99,
+      region: 'United States'
+    }),
+    Item.create({
+      name: 'European Whiskey',
+      description: 'hey, this is pretty good',
+      price: 3.0,
+      stock: 1,
+      region: 'Europe'
+    }),
+    Item.create({
+      name: 'Japanese Whiskey',
+      description: 'it buuurrrnns my throat',
+      price: 74,
+      stock: 53,
+      region: 'Japan'
+    }),
+    Item.create({
+      name: 'Jamacian Whiskey',
+      description: 'straight from the island!',
+      price: 3249.573,
+      stock: 993,
+      region: 'Jamacia'
+    }),
+    Item.create({
+      name: 'US Whiskey',
+      description: 'meh',
+      price: 100.99,
+      stock: 99,
+      region: 'United States'
+    }),
+    Item.create({
+      name: 'European Whiskey',
+      description: 'hey, this is pretty good',
+      price: 3.0,
+      stock: 1,
+      region: 'Europe'
+    }),
+    Item.create({
+      name: 'Japanese Whiskey',
+      description: 'it buuurrrnns my throat',
+      price: 74,
+      stock: 53,
+      region: 'Japan'
+    }),
+    Item.create({
+      name: 'Jamacian Whiskey',
+      description: 'straight from the island!',
+      price: 3249.573,
+      stock: 993,
+      region: 'Jamacia'
+    }),
+    Item.create({
       name: 'US Whiskey',
       description: 'meh',
       price: 100.99,
