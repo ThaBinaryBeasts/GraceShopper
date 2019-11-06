@@ -36,6 +36,7 @@ router.post('/:userId/addcart', async (req, res, next) => {
     const itemId = req.body.itemId;
     const quantity = req.body.quantity;
 
+    //Looking for the order, if It doesn't exist create new with status "pending" that represents user's cart
     const cart = await Order.findOrCreate({
       where: {
         userId: req.params.userId,
@@ -44,11 +45,20 @@ router.post('/:userId/addcart', async (req, res, next) => {
       defaults: req.body
     });
 
-    const orderId = cart[0].id;
+    const order = cart[0];
+    const orderId = order.id;
 
-    const addedItem = await ItemOrders.create({itemId, quantity, orderId});
+    //Push item refference and quantity into joint table(itemOrder);
+    await ItemOrders.create({itemId, quantity, orderId});
 
-    res.status(201).send(addedItem);
+    // Get specific Item to retrieve item price
+    const item = await Item.findByPk(itemId);
+
+    // updating total in user order and rounding it to $0.00
+    order.total += Math.round(item.price * quantity * 100) / 100;
+    await order.save();
+
+    res.status(201).send(order);
   } catch (error) {
     next(error);
   }
