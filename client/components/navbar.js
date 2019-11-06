@@ -6,13 +6,24 @@ import {logout} from '../store';
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>BOILERMAKER</h1>
     <nav>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
+          <Link to="/">
+            <img
+              src="https://s3.envato.com/files/240420392/oiugsaa70wh.jpg"
+              width={50}
+            />
+          </Link>
           <Link to="/catalog">Catalog</Link>
+          <h1>Off The Barrel</h1>
+          <Link to="/checkout">
+            <img
+              src="https://pngriver.com/wp-content/uploads/2018/04/Download-Shopping-Cart-Logo-Png-Image-78016-For-Designing-Projects.png"
+              width={50}
+            />
+          </Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
@@ -20,9 +31,22 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       ) : (
         <div>
           {/* The navbar will show these links before you log in */}
+          <Link to="/">
+            <img
+              src="https://s3.envato.com/files/240420392/oiugsaa70wh.jpg"
+              width={50}
+            />
+          </Link>
+          <Link to="/catalog">Catalog</Link>
+          <h1>Off The Barrel</h1>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-          <Link to="/catalog">Catalog</Link>
+          <Link to="/checkout">
+            <img
+              src="https://pngriver.com/wp-content/uploads/2018/04/Download-Shopping-Cart-Logo-Png-Image-78016-For-Designing-Projects.png"
+              width={50}
+            />
+          </Link>
         </div>
       )}
     </nav>
