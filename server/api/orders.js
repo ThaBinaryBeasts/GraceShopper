@@ -58,7 +58,15 @@ router.post('/:userId/addcart', async (req, res, next) => {
     order.total += Math.round(item.price * quantity * 100) / 100;
     await order.save();
 
-    res.status(201).send(order);
+    //requesting our full order
+    const finalOrder = await Order.findByPk(orderId, {
+      include: [{model: Item, as: ItemOrders}]
+    });
+
+    // grabing the last item we just added to the cart
+    const addedItem = finalOrder.items[finalOrder.items.length - 1];
+
+    res.status(201).send(addedItem);
   } catch (error) {
     next(error);
   }
