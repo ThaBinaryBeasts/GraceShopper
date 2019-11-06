@@ -2,7 +2,12 @@
 @import url(https://fonts.googleapis.com/css?family=Seaweed+Script);
 
 body {
-  background: url(https://www.deadwood.com/wp/wp-content/uploads/2018/09/big-whiskey_hero-image.jpg);
+  background: url(https://www.deadwood.com/wp/wp-content/uploads/2018/09/big-whiskey_hero-image.jpg)
+    no-repeat fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 .plate {
   width: 410px;
