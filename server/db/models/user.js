@@ -3,6 +3,8 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const User = db.define('user', {
+  // isEmpty validation
+  // hook or a virtual method that will give you back the fullName
   firstName: {
     type: Sequelize.STRING,
     allowNull: false
@@ -12,6 +14,7 @@ const User = db.define('user', {
     allowNull: false
   },
   email: {
+    // isEmail
     type: Sequelize.STRING,
     unique: true,
     allowNull: false
@@ -35,6 +38,8 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING
   },
+  // isAdmin ? // both an admin and a seller
+  // extending the capability of a user
   flag: {
     type: Sequelize.INTEGER,
     defaultValue: 0,

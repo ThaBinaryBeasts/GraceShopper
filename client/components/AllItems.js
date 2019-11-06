@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {getAllItems} from '../store/item';
 import Item from './Item';
 
+// can become stateless and just receive props
 export class AllItems extends Component {
   componentDidMount() {
     this.props.getAllItems();

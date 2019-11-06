@@ -2,6 +2,10 @@ const router = require('express').Router();
 const {User} = require('../db/models');
 module.exports = router;
 
+// WHO is allowed to see this route
+// security
+// gatekeeper middleware
+// calling next to make sure you don't hang a request in Express
 router.get('/', async (req, res, next) => {
   try {
     res.send(

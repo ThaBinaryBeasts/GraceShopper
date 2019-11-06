@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const {ItemOrders, Item, Order} = require('../db/models');
 
+// /api/users/4/orders
+// /api/users/4/cart
+
+// /api/orders/4/cart
 router.get('/:userId/cart', async (req, res, next) => {
   try {
     const item = await Order.findOne({
@@ -42,6 +46,7 @@ router.post('/:userId/addcart', async (req, res, next) => {
         userId: req.params.userId,
         status: 'pending'
       },
+      // remove this
       defaults: req.body
     });
 
@@ -49,11 +54,16 @@ router.post('/:userId/addcart', async (req, res, next) => {
     const orderId = order.id;
 
     //Push item refference and quantity into joint table(itemOrder);
+
+    // be careful about WHERE you are allowing this route to be hit
+    // you might be better off doing a findorcreate and then an update on quantity
     await ItemOrders.create({itemId, quantity, orderId});
 
     // Get specific Item to retrieve item price
     const item = await Item.findByPk(itemId);
 
+    // anything involving vanilla JS -> moving into a separate function so that you don't clog up a route.
+    // could be a hook
     // updating total in user order and rounding it to $0.00
     order.total += Math.round(item.price * quantity * 100) / 100;
     await order.save();

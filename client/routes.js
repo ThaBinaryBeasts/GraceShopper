@@ -14,6 +14,7 @@ import Home from './components/Home';
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    // this.props.getProducts()
   }
 
   render() {
