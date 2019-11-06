@@ -20,22 +20,24 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/">
-            <img
-              src="https://cdn5.vectorstock.com/i/1000x1000/60/34/whiskey-barrel-premium-quality-wheat-wreath-flat-vector-13806034.jpg"
-              width={50}
-            />
-          </Link>
-          <Link to="/catalog">Catalog</Link>
-          <Link to="/checkout">
-            <img
-              src="https://pngriver.com/wp-content/uploads/2018/04/Download-Shopping-Cart-Logo-Png-Image-78016-For-Designing-Projects.png"
-              width={50}
-            />
-          </Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
+          <p>
+            <Link to="/">
+              <img
+                src="https://cdn5.vectorstock.com/i/1000x1000/60/34/whiskey-barrel-premium-quality-wheat-wreath-flat-vector-13806034.jpg"
+                width={50}
+              />
+            </Link>
+            <Link to="/catalog">Catalog</Link>
+            <Link to="/checkout">
+              <img
+                src="https://pngriver.com/wp-content/uploads/2018/04/Download-Shopping-Cart-Logo-Png-Image-78016-For-Designing-Projects.png"
+                width={50}
+              />
+            </Link>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </p>
         </div>
       ) : (
         <div id="navBar">
