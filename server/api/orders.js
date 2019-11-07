@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const {ItemOrders, Item, Order} = require('../db/models');
 
-router.get('/:userId/cart', async (req, res, next) => {
+router.get('/cart', async (req, res, next) => {
   try {
     const item = await Order.findOne({
       where: {
-        userId: req.params.userId,
+        userId: req.user.id,
         status: 'pending'
       },
       include: [{model: Item, as: ItemOrders}]
@@ -31,7 +31,7 @@ router.get('/history/:userId', async (req, res, next) => {
   }
 });
 
-router.post('/:userId/addcart', async (req, res, next) => {
+router.post('/addcart', async (req, res, next) => {
   try {
     const itemId = req.body.itemId;
     const quantity = req.body.quantity;
@@ -45,7 +45,7 @@ router.post('/:userId/addcart', async (req, res, next) => {
     //Looking for the order, if It doesn't exist create new with status "pending" that represents user's cart
     const cart = await Order.findOrCreate({
       where: {
-        userId: req.params.userId,
+        userId: req.user.id,
         status: 'pending'
       }
     });

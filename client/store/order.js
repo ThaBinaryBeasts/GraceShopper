@@ -15,25 +15,26 @@ const addingToCart = item => ({type: ADD_TO_CART, item});
 /**
  * INITIAL STATE
  */
-const defaultItemList = {cart: []};
+const defaultItemList = {cart: {}};
 
 /**
  * THUNK CREATORS
  */
-export const insideCart = userId => async dispatch => {
+export const insideCart = () => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/orders/${userId}/cart`);
+    const {data} = await axios.get(`/api/orders/cart`);
     dispatch(inCart(data));
   } catch (error) {
     console.error(error);
   }
 };
 
-export const addToCart = (itemId, quanity, userId) => async dispatch => {
+export const addToCart = (itemId, quanity, itemPrice) => async dispatch => {
   try {
-    const {data} = await axios.post(`/api/orders/${userId}/addcart`, {
+    const {data} = await axios.post(`/api/orders/addcart`, {
       itemId,
-      quanity
+      quanity,
+      itemPrice
     });
     dispatch(addingToCart(data));
   } catch (error) {
@@ -49,7 +50,7 @@ export default function(state = defaultItemList, action) {
     case IN_CART:
       return {...state, cart: action.cart};
     case ADD_TO_CART:
-      return {...state, cart: [...state.cart, action.item]};
+      return {...state, cart: {...state.cart, items: action.item}};
     default:
       return state;
   }
