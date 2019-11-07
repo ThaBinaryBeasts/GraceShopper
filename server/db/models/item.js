@@ -17,7 +17,7 @@ const Item = db.define('item', {
     allowNull: false,
     validate: {
       min: 0,
-      max: 3000.0
+      max: 10000.0
     }
   },
   imageUrl: {
@@ -33,11 +33,11 @@ const Item = db.define('item', {
     defaultValue: 0,
     validate: {
       min: 0,
-      max: 100
+      max: 1000
     }
   },
   region: {
-    type: Sequelize.ENUM('United States , Scotland , Ireland , Japan , Canada')
+    type: Sequelize.STRING
   }
 });
 

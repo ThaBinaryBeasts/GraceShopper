@@ -7,7 +7,7 @@ const ItemOrders = db.define('itemOrders', {
     defaultValue: 0,
     validate: {
       min: 0,
-      max: 100
+      max: 1000
     }
   },
   purchasePrice: {
@@ -15,18 +15,15 @@ const ItemOrders = db.define('itemOrders', {
     defaultValue: 0,
     validate: {
       min: 0,
-      max: 3000.0
+      max: 5000.0
     }
   },
   total: {
     type: Sequelize.FLOAT,
     defaultValue: 0,
     validate: {
-      getTotal() {
-        if (this.quanity > 0) {
-          return this.quanity * this.purchasePrice;
-        }
-      }
+      min: 0,
+      max: 300000
     }
   }
 });
