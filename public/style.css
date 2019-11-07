@@ -80,3 +80,14 @@ form div {
   display: flex;
   text-align: center;
 }
+
+.navBar {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: white;
+}
+
+#singleItem > p {
+  color: white;
+}
