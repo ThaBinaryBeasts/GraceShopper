@@ -2,22 +2,19 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getSelectedItem} from '../store/item';
 import {addToCart} from '../store/order';
-import {runInThisContext} from 'vm';
 
 export class SingleItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: 0
+      quantity: ''
     };
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
     this.props.getSelectedItem(this.props.match.params.id);
-    // this.props.addToCart(this.props.match.params.id, this.props.item.quantity, this.props.item.price);
   }
 
   handleAddToCart(event) {
@@ -34,8 +31,6 @@ export class SingleItem extends Component {
   }
 
   render() {
-    console.log('props at SINGLE ITEM >>>>>>', this.props);
-    console.log('current STATE >>>>>>', this.state);
     const {name, description, price, imageUrl, stock, region} = this.props.item;
     return (
       <div id="singleItem">
