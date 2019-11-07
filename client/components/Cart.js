@@ -7,22 +7,26 @@ export class Cart extends Component {
   }
   render() {
     console.log(this.props.cart);
+
     return (
       <div>
-        {this.props.cart.id
-          ? this.props.cart.items.map(c => {
+        {this.props.cart.id ? (
+          <div>
+            {this.props.cart.items.map(c => {
               return (
                 <div key={c.id}>
-                  <h1>111111</h1>
-                  <p>{c.imageUrl}</p>
-                  <p>{c.items}</p>
-                  <p>{c.price}</p>
-                  <p>{c.quanity}</p>
-                  <p>{c.total}</p>
+                  <img src={c.imageUrl} />
+                  <h2>{c.name}</h2>
+                  <div>Price: {c.price}</div>
+                  <div>Qt: {c.itemOrders.quantity}</div>
+                  <div> Total: {c.itemOrders.total}</div>
                 </div>
               );
-            })
-          : null}
+            })}
+
+            <h2>Total price at cart {this.props.cart.total}</h2>
+          </div>
+        ) : null}
       </div>
     );
   }

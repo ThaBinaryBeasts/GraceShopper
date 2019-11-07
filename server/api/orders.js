@@ -16,12 +16,12 @@ router.get('/cart', async (req, res, next) => {
   }
 });
 
-router.get('/history/:userId', async (req, res, next) => {
+router.get('/history', async (req, res, next) => {
   try {
     const item = await Order.findAll({
       where: {
         status: 'completed',
-        userId: req.params.userId
+        userId: req.user.id
       },
       include: [{model: Item, as: ItemOrders}]
     });
