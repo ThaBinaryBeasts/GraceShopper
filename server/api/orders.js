@@ -36,26 +36,49 @@ router.post('/:userId/addcart', async (req, res, next) => {
     const itemId = req.body.itemId;
     const quantity = req.body.quantity;
 
+    const itemPrice = req.body.itemPrice;
+
+    const total = quantity * itemPrice;
+
+    let oldTotal;
+
     //Looking for the order, if It doesn't exist create new with status "pending" that represents user's cart
     const cart = await Order.findOrCreate({
       where: {
         userId: req.params.userId,
         status: 'pending'
-      },
-      defaults: req.body
+      }
     });
 
     const order = cart[0];
     const orderId = order.id;
 
     //Push item refference and quantity into joint table(itemOrder);
-    await ItemOrders.create({itemId, quantity, orderId});
+    const addingQuantity = await ItemOrders.findOrCreate({
+      where: {
+        orderId: orderId,
+        itemId: itemId
+      },
+      defaults: {itemId, quantity, orderId, total}
+    });
 
-    // Get specific Item to retrieve item price
-    const item = await Item.findByPk(itemId);
+    const updatedOrderItem = addingQuantity[0];
+
+    if (!addingQuantity[1]) {
+      updatedOrderItem.quantity = quantity;
+
+      oldTotal = updatedOrderItem.total;
+
+      updatedOrderItem.total = total;
+      await updatedOrderItem.save();
+    }
 
     // updating total in user order and rounding it to $0.00
-    order.total += Math.round(item.price * quantity * 100) / 100;
+    if (oldTotal) {
+      order.total -= oldTotal;
+    }
+    order.total += updatedOrderItem.total;
+
     await order.save();
 
     //requesting our full order
@@ -63,10 +86,7 @@ router.post('/:userId/addcart', async (req, res, next) => {
       include: [{model: Item, as: ItemOrders}]
     });
 
-    // grabing the last item we just added to the cart
-    const addedItem = finalOrder.items[finalOrder.items.length - 1];
-
-    res.status(201).send(addedItem);
+    res.status(201).send(finalOrder);
   } catch (error) {
     next(error);
   }

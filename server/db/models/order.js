@@ -3,12 +3,12 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Order = db.define('order', {
-  currentPrice: {
+  total: {
     type: Sequelize.FLOAT,
     defaultValue: 0,
     validate: {
       min: 0,
-      max: 3000.0
+      max: 500000.0
     }
   },
   status: {
