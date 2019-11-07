@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getSelectedItem} from '../store/item';
 import {addToCart} from '../store/order';
-import {runInThisContext} from 'vm';
+import {me} from '../store/user';
 
 export class SingleItem extends Component {
   constructor(props) {
@@ -12,25 +12,29 @@ export class SingleItem extends Component {
     };
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
     this.props.getSelectedItem(this.props.match.params.id);
-    // this.props.addToCart(this.props.match.params.id, this.props.item.quantity, this.props.item.price);
   }
 
   handleAddToCart(event) {
     event.preventDefault();
-    this.props.addToCart(
-      this.props.match.params.id,
-      this.state.quantity,
-      this.props.item.price
-    );
+    if (!this.props.user.id) {
+      let valObj = JSON.parse(localStorage.getItem('cart')) || {};
+      valObj[this.props.item.id] = this.state.quantity;
+      localStorage.setItem('cart', JSON.stringify(valObj));
+    } else {
+      this.props.addToCart(
+        this.props.match.params.id,
+        this.state.quantity,
+        this.props.item.price
+      );
+    }
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: Number(event.target.value)});
+    this.setState({quantity: Number(event.target.value)});
   }
 
   render() {
@@ -46,12 +50,13 @@ export class SingleItem extends Component {
         <p>{price}</p>
         <label>
           Quantity
-          <input
-            type="number"
-            name="quantity"
-            onChange={this.handleChange}
-            value={this.state.quantity}
-          />
+          <select value={this.state.quantity} onChange={this.handleChange}>
+            <option value={0}>Qty 0</option>
+            <option value={1}>Qty 1</option>
+            <option value={2}>Qty 2</option>
+            <option value={3}>Qty 3</option>
+            <option value={4}>Qty 4</option>
+          </select>
         </label>
         <button type="submit" onClick={this.handleAddToCart}>
           Add To Cart
@@ -61,12 +66,15 @@ export class SingleItem extends Component {
   }
 }
 const mapStateToProps = state => ({
-  item: state.item.item
+  item: state.item.item,
+  user: state.user
 });
 const mapDispatchToProps = dispatch => {
   return {
     getSelectedItem: id => dispatch(getSelectedItem(id)),
-    addToCart: (id, price, quantity) => dispatch(addToCart(id, price, quantity))
+    addToCart: (id, price, quantity) =>
+      dispatch(addToCart(id, price, quantity)),
+    me: () => dispatch(me())
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SingleItem);
