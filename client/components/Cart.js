@@ -8,7 +8,8 @@ export class Cart extends Component {
   constructor() {
     super();
     this.state = {
-      itemList: []
+      itemList: [],
+      guestSubtotal: 0
     };
   }
   async componentDidMount() {
@@ -22,14 +23,18 @@ export class Cart extends Component {
 
   async getItemsFromLS() {
     const cart = JSON.parse(localStorage.getItem('cart'));
+    let subtotal = 0;
+
+    // eslint-disable-next-line guard-for-in
     for (let itemId in cart) {
       let {data} = await axios.get(`/api/items/${itemId}`);
       data.quantity = cart[itemId];
       data.total = data.price * data.quantity;
       const newitemList = [...this.state.itemList, data];
+      subtotal += data.total;
       this.setState({itemList: newitemList});
-      console.log(this.state);
     }
+    this.setState({...this.state, guestSubtotal: subtotal});
   }
 
   render() {
@@ -57,7 +62,6 @@ export class Cart extends Component {
         ) : localStorage.length ? (
           <div>
             {this.state.itemList.map(item => {
-              console.log('item', item);
               return (
                 <div key={item.id}>
                   <img src={item.imageUrl} />
@@ -68,7 +72,7 @@ export class Cart extends Component {
                 </div>
               );
             })}
-            <p>inside local storage cart - populated one!</p>
+            <h2>Total price at cart {this.state.guestSubtotal}</h2>
           </div>
         ) : (
           <p>nothing is in your local storage cart!</p>
