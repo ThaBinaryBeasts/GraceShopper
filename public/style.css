@@ -91,3 +91,20 @@ form div {
 #singleItem > p {
   color: white;
 }
+
+.allItems {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.itemAll {
+  flex: 1;
+}
+
+.navBarElement {
+  height: 30px;
+}
+
+.itemInCart {
+  color: white;
+}

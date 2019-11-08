@@ -23,6 +23,8 @@ router.put('/cart', async (req, res, next) => {
     const orderId = req.body.orderId;
     const price = req.body.price;
 
+    console.log('params passed to update', quantity, itemId, orderId, price);
+
     const itemOrderToUpdate = await ItemOrders.findOne({
       where: {
         itemId: itemId,
@@ -84,9 +86,8 @@ router.post('/addcart', async (req, res, next) => {
         orderId: orderId,
         itemId: itemId
       },
-      defaults: {itemId, quantity, orderId, total}
+      defaults: {quantity, total}
     });
-
     const updatedOrderItem = addingQuantity[0];
 
     if (!addingQuantity[1]) {
@@ -96,17 +97,18 @@ router.post('/addcart', async (req, res, next) => {
     }
 
     Order.getTotalOrder(orderId);
+    // const lastAddedItem = Order.getLastAdded(orderId);
 
-    res.status(201).send(updatedOrderItem);
+    res.send(updatedOrderItem);
   } catch (error) {
     next(error);
   }
 });
 
-router.delete('/cart', async (req, res, next) => {
+router.delete('/cart/:orderId/:itemId', async (req, res, next) => {
   try {
-    const orderId = req.body.orderId;
-    const itemId = req.body.itemId;
+    const orderId = req.params.orderId;
+    const itemId = req.params.itemId;
 
     const itemOrder = await ItemOrders.findOne({
       where: {
@@ -114,10 +116,10 @@ router.delete('/cart', async (req, res, next) => {
         itemId: itemId
       }
     });
+    const deleted = itemOrder.destroy();
 
     Order.getTotalOrder(orderId);
 
-    const deleted = itemOrder.destroy();
     res.status(204).send(deleted);
   } catch (error) {
     next(error);
