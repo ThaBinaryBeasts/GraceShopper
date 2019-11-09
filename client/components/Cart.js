@@ -48,11 +48,11 @@ export class Cart extends Component {
       data.total = data.price * data.quantity;
       const newitemList = [...this.state.itemList, data];
       this.setState({itemList: newitemList});
-      console.log(this.state);
     }
   }
 
   render() {
+    console.log('THIS IS PROPS CART', this.props.cart);
     return (
       <div>
         {this.props.user.id ? (
