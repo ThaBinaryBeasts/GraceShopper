@@ -20,7 +20,7 @@ const updateItemCart = updated => ({type: UPDATE_ITEM_CART, updated});
 /**
  * INITIAL STATE
  */
-const defaultItemList = {cart: {}};
+const defaultItemList = {cart: {items: []}};
 
 /**
  * THUNK CREATORS
@@ -36,13 +36,11 @@ export const insideCart = () => async dispatch => {
 
 export const addToCart = (itemId, quantity, itemPrice) => async dispatch => {
   try {
-    console.log('incoming args to addToCart', itemId, quantity, itemPrice);
     const {data} = await axios.post(`/api/orders/addcart`, {
       itemId,
       quantity,
       itemPrice
     });
-    console.log('data returned from  Thunk', data);
     dispatch(addingToCart(data));
   } catch (error) {
     console.error(error);
@@ -51,9 +49,7 @@ export const addToCart = (itemId, quantity, itemPrice) => async dispatch => {
 
 export const removeItem = (itemId, orderId) => async dispatch => {
   try {
-    console.log('Remove Item thunk is running');
-
-    await axios.delete('/api/orders/cart', {itemId, orderId});
+    await axios.delete(`/api/orders/cart/${orderId}/${itemId}`);
 
     dispatch(deleteFromCart(itemId));
   } catch (error) {
@@ -68,7 +64,13 @@ export const updateItem = (
   price
 ) => async dispatch => {
   try {
-    console.log('Update Item thunk is running');
+    console.log(
+      'Update Item thunk is running',
+      quantity,
+      itemId,
+      orderId,
+      price
+    );
     const {data} = await axios.put('/api/orders/cart', {
       itemId,
       orderId,
@@ -91,7 +93,10 @@ export default function(state = defaultItemList, action) {
       return {...state, cart: action.cart};
 
     case ADD_TO_CART:
-      return {...state, cart: {...state.cart, items: action.item}};
+      return {
+        ...state,
+        cart: {...state.cart, items: [...state.cart.items, action.item]}
+      };
 
     case DELETE_FROM_CART:
       const updatedItemsAfterDelete = state.cart.items.filter(

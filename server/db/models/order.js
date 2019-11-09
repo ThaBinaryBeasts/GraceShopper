@@ -37,4 +37,18 @@ Order.getTotalOrder = async orderId => {
   await order.save();
 };
 
+Order.getLastAdded = async orderId => {
+  const order = await Order.findByPk(orderId, {
+    include: [{model: Item, as: ItemOrders}]
+  });
+
+  const itemsInOrder = order.items;
+
+  const lastAddedItem = itemsInOrder[itemsInOrder.length - 1];
+  //chaeck with team
+  // console.log('data from order.getLast >>>>>>>>>>>>>>>', lastAddedItem.item);
+
+  return lastAddedItem;
+};
+
 module.exports = Order;
