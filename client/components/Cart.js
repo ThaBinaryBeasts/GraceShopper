@@ -4,7 +4,7 @@ import {removeItem, updateItem, insideCart} from '../store/order';
 
 //local storage
 import axios from 'axios';
-import {getSelectedItem} from '../store/item';
+import item, {getSelectedItem} from '../store/item';
 import {me} from '../store/user';
 
 export class Cart extends Component {
@@ -12,22 +12,38 @@ export class Cart extends Component {
     super(props);
     this.state = {
       quantity: 0,
-      itemList: []
+      itemList: [],
+      itemId: 0
     };
     this.handleChange = this.handleChange.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   async componentDidMount() {
     if (!this.props.user.id) {
       await this.getItemsFromLS();
     } else {
-      this.props.insideCart();
+      await this.props.insideCart();
     }
+    this.props.insideCart();
   }
 
   handleChange(e) {
+    e.preventDefault();
     this.setState({
       quantity: e.target.value
+    });
+  }
+
+  deleteItem(itemId, orderId) {
+    this.props.removeItem(itemId, orderId);
+  }
+
+  async handleClick(itemId, orderId, quantity, price) {
+    await this.props.updateItem(itemId, orderId, quantity, price);
+    await this.props.insideCart();
+    this.setState({
+      itemId: itemId
     });
   }
 
@@ -39,17 +55,15 @@ export class Cart extends Component {
       data.total = data.price * data.quantity;
       const newitemList = [...this.state.itemList, data];
       this.setState({itemList: newitemList});
-      console.log(this.state);
     }
   }
 
-  // this.props.updateItem(item.id, this.props.cart.id, event.tatget.value, item.price)
-
   render() {
+    console.log('THIS IS PROPS CART', this.props.cart);
+    console.log('this is the user', this.props.user.id);
     return (
       <div>
         {this.props.user.id ? (
-          //PASTE HERE
           <div>
             {this.props.cart.id ? (
               this.props.cart.items.length > 0 ? (
@@ -59,6 +73,14 @@ export class Cart extends Component {
                     {this.props.cart.items.map(item => {
                       return (
                         <div className="itemInCart" key={item.id}>
+                          <button
+                            id="deleted"
+                            onClick={() =>
+                              this.deleteItem(item.id, this.props.cart.id)
+                            }
+                          >
+                            REMOVE ITEM
+                          </button>
                           <img src={item.imageUrl} />
                           <h2>{item.name}</h2>
                           <div>Price: {item.price}</div>
@@ -78,7 +100,7 @@ export class Cart extends Component {
                           <button
                             type="submit"
                             onClick={() =>
-                              this.props.updateItem(
+                              this.handleClick(
                                 item.id,
                                 this.props.cart.id,
                                 this.state.quantity,
