@@ -4,7 +4,7 @@ import {removeItem, updateItem, insideCart} from '../store/order';
 
 //local storage
 import axios from 'axios';
-import {getSelectedItem} from '../store/item';
+import item, {getSelectedItem} from '../store/item';
 import {me} from '../store/user';
 
 export class Cart extends Component {
@@ -12,7 +12,8 @@ export class Cart extends Component {
     super(props);
     this.state = {
       quantity: 0,
-      itemList: []
+      itemList: [],
+      itemId: 0
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -21,13 +22,21 @@ export class Cart extends Component {
     if (!this.props.user.id) {
       await this.getItemsFromLS();
     } else {
-      this.props.insideCart();
+      await this.props.insideCart();
     }
   }
 
   handleChange(e) {
     this.setState({
       quantity: e.target.value
+    });
+  }
+
+  async handleClick(itemId, orderId, quantity, price) {
+    await this.props.updateItem(itemId, orderId, quantity, price);
+    await this.props.insideCart();
+    this.setState({
+      itemId: itemId
     });
   }
 
@@ -43,13 +52,10 @@ export class Cart extends Component {
     }
   }
 
-  // this.props.updateItem(item.id, this.props.cart.id, event.tatget.value, item.price)
-
   render() {
     return (
       <div>
         {this.props.user.id ? (
-          //PASTE HERE
           <div>
             {this.props.cart.id ? (
               this.props.cart.items.length > 0 ? (
@@ -78,7 +84,7 @@ export class Cart extends Component {
                           <button
                             type="submit"
                             onClick={() =>
-                              this.props.updateItem(
+                              this.handleClick(
                                 item.id,
                                 this.props.cart.id,
                                 this.state.quantity,
