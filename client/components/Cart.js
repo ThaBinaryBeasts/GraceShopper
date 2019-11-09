@@ -16,6 +16,7 @@ export class Cart extends Component {
       itemId: 0
     };
     this.handleChange = this.handleChange.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   async componentDidMount() {
@@ -32,6 +33,10 @@ export class Cart extends Component {
     this.setState({
       quantity: e.target.value
     });
+  }
+
+  deleteItem(itemId, orderId) {
+    this.props.removeItem(itemId, orderId);
   }
 
   async handleClick(itemId, orderId, quantity, price) {
@@ -68,6 +73,14 @@ export class Cart extends Component {
                     {this.props.cart.items.map(item => {
                       return (
                         <div className="itemInCart" key={item.id}>
+                          <button
+                            id="deleted"
+                            onClick={() =>
+                              this.deleteItem(item.id, this.props.cart.id)
+                            }
+                          >
+                            REMOVE ITEM
+                          </button>
                           <img src={item.imageUrl} />
                           <h2>{item.name}</h2>
                           <div>Price: {item.price}</div>
