@@ -24,9 +24,11 @@ export class Cart extends Component {
     } else {
       await this.props.insideCart();
     }
+    this.props.insideCart();
   }
 
   handleChange(e) {
+    e.preventDefault();
     this.setState({
       quantity: e.target.value
     });
@@ -53,6 +55,7 @@ export class Cart extends Component {
 
   render() {
     console.log('THIS IS PROPS CART', this.props.cart);
+    console.log('this is the user', this.props.user.id);
     return (
       <div>
         {this.props.user.id ? (
