@@ -4,6 +4,7 @@ const Home = () => {
   return (
     <div id="home">
       <h2>About Us</h2>
+
       <p>
         The sweetness of corn. The spiciness of rye. The smoothness of wheat.
         The smokiness of peated malt. The tannic and vanilla flavors imparted by
