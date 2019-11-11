@@ -92,11 +92,15 @@ form div {
     no-repeat center 0;
 }
 
-.navBarGuest {
+#navBarGuest {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  background-color: rgba(116, 49, 49, 0.746);
+  justify-content: space-between;
+  position: relative;
+  background: #020202
+    url(//thewhiskyclub.com.au/wp-content/themes/MeetGavernWP/images/header.jpg)
+    no-repeat center 0;
 }
 
 #singleItem {
