@@ -66,9 +66,6 @@ export class Cart extends Component {
   }
 
   render() {
-    console.log('THIS IS PROPS CART', this.props.cart);
-    console.log('this is the user', this.props.user.id);
-    console.log('ITEM LIST', this.state.itemList);
     return (
       <div>
         {this.props.user.id ? (
@@ -82,14 +79,19 @@ export class Cart extends Component {
                       return (
                         <div className="itemInCart" key={item.id}>
                           <button
-                            id="deleted"
                             onClick={() =>
                               this.deleteItem(item.id, this.props.cart.id)
                             }
                           >
-                            REMOVE ITEM
+                            <img
+                              src="https://www.clipartwiki.com/clipimg/detail/12-125328_collection-of-free-transparent-transparent-garbage-bin-cartoon.png"
+                              width={30}
+                            />
                           </button>
-                          <img src={item.imageUrl} />
+
+                          <p>
+                            <img src={item.imageUrl} width={150} />
+                          </p>
                           <h2>{item.name}</h2>
                           <div>Price: {item.price}</div>
                           <div>Qt: {item.itemOrders.quantity}</div>
@@ -124,14 +126,12 @@ export class Cart extends Component {
                             onClick={() =>
                               this.props.removeItem(item.id, this.props.cart.id)
                             }
-                          >
-                            XXX
-                          </h1>
+                          />
                         </div>
                       );
                     })}
 
-                    <h2>Total price at cart {this.props.cart.total}</h2>
+                    <h2 id="totalPrice">Total: USD {this.props.cart.total}</h2>
                   </div>
                 ) : null
               ) : null
@@ -146,7 +146,11 @@ export class Cart extends Component {
                   <h2>{item.name}</h2>
                   <div>Price: {item.price}</div>
                   <div>Qt: {item.quantity}</div>
-                  <div> Total: {item.total}</div>
+                  <div>
+                    {' '}
+                    Total:<i className="dollar sign icon" />
+                    {item.total}
+                  </div>
                 </div>
               );
             })}

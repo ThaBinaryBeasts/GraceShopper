@@ -42,7 +42,7 @@ async function seed() {
     Item.create({
       name: 'Blantons Single Barrel',
       description:
-        'hIn a special metal-clad aging barn, master distillers carefully select the best barrels of Bourbon exclusively for Blantons. Why metal and not brick? The metal heats and cools quicker, allowing faster aging.',
+        'In a special metal-clad aging barn, master distillers carefully select the best barrels of Bourbon exclusively for Blantons. Why metal and not brick? The metal heats and cools quicker, allowing faster aging.',
       price: 65.0,
       imageUrl:
         'https://ilikewine.com.au/wp-content/uploads/2019/06/blantons-reserve-bourbon.jpg',

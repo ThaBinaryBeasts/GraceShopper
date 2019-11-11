@@ -11,7 +11,7 @@ body {
 }
 .plate {
   width: 410px;
-  margin: 10% auto;
+  margin: 3% auto;
 }
 .shadow {
   color: #fff;
@@ -69,42 +69,108 @@ label {
 
 nav a {
   display: flex;
-  margin: 100px;
+  margin: 5px;
+  color: white;
+  font-style: italic;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 form div {
   margin: 1em;
   display: inline-block;
 }
-#navBar {
-  display: flex;
-  text-align: center;
-}
 
 .navBar {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  background-color: white;
+  justify-content: space-between;
+  position: relative;
+  background: #020202
+    url(//thewhiskyclub.com.au/wp-content/themes/MeetGavernWP/images/header.jpg)
+    no-repeat center 0;
 }
 
-#singleItem > p {
-  color: white;
+.navBarGuest {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: rgba(116, 49, 49, 0.746);
+}
+
+#singleItem {
+  display: flex;
+  background-color: white;
+  color: black;
+  margin: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin-right: 35%;
+  margin-left: 35%;
+  padding: 30px;
+  margin-bottom: 20%;
+  margin-top: 2%;
+  border-style: inset;
+  border-width: 5px;
+  font-family: Optima;
+  font-style: italic;
 }
 
 .allItems {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .itemAll {
+  display: flex;
   flex: 1;
+  margin: 30px;
+  background-size: 5%;
+  padding: 10px;
+  border-radius: 30px;
+  font-size: 10%;
+  background-color: white;
+  flex: 0 1 calc(20% - 20px);
+  justify-content: space-around;
 }
 
 .navBarElement {
-  height: 30px;
+  height: 20px;
 }
 
 .itemInCart {
   color: white;
+}
+
+#home {
+  display: flex;
+  flex-wrap: wrap;
+  color:  black;
+  background-color: white;
+  margin-left: 35%;
+  margin-right: 35%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  outline-style: solid;
+  padding: 20px;
+  font-family: Optima;
+  font-style: italic;
+}
+
+#quanColor {
+  color: black;
+}
+
+#totalPrice {
+  color: white;
+}
+
+#centerNav {
+  padding: 0;
+  margin-left: 45%;
+  color: black;
 }
