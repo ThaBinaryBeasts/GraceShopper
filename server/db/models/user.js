@@ -87,6 +87,10 @@ const setSaltAndPassword = user => {
   }
 };
 
+const getFullName = user => {
+  return `${user.firstName} ${user.lastName}`;
+};
+
 User.beforeCreate(setSaltAndPassword);
 User.beforeUpdate(setSaltAndPassword);
 User.beforeBulkCreate(users => {

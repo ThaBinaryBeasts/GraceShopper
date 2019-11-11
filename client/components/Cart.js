@@ -122,7 +122,7 @@ export class Cart extends Component {
                             <img src={item.imageUrl} width={150} />
                           </p>
                           <h2>{item.name}</h2>
-                          <div>Price: {item.price}</div>
+                          <div>Price: {item.price.toFixed(2)}</div>
                           <div>Qt: {item.itemOrders.quantity}</div>
                           <label>
                             Quantity
@@ -176,17 +176,17 @@ export class Cart extends Component {
                   </button>
                   <img src={item.imageUrl} />
                   <h2>{item.name}</h2>
-                  <div>Price: {item.price}</div>
+                  <div>Price: {item.price.toFixed(2)}</div>
                   <div>Qt: {item.quantity}</div>
                   <div>
                     {' '}
                     Total:<i className="dollar sign icon" />
-                    {item.total}
+                    {item.total.toFixed(2)}
                   </div>
                 </div>
               );
             })}
-            <h2>Total price of cart {this.state.guestSubtotal}</h2>
+            <h2>Total price of cart {this.state.guestSubtotal.toFixed(2)}</h2>
           </div>
         ) : (
           <p>nothing is in your local storage cart!</p>
