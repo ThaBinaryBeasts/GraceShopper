@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const {User} = require('../db/models');
 module.exports = router;
-
 router.get('/', async (req, res, next) => {
   try {
     console.log(req.user.flag);
@@ -18,7 +17,6 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
-
 router.get('/:id', async (req, res, next) => {
   try {
     if (req.user.id === req.params.id || req.user.flag === 1) {
