@@ -9,6 +9,7 @@ import {me} from './store';
 import Home from './components/Home';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import MyOrders from './components/MyOrders';
 
 /**
  * COMPONENT
@@ -29,6 +30,7 @@ class Routes extends Component {
         <Route exact path="/catalog" component={AllItems} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/cart/checkout" component={Checkout} />
+        <Route exact path="/orders" component={MyOrders} />
         <Route component={Login} />
       </Switch>
     );

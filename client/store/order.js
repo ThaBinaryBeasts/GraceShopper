@@ -9,6 +9,7 @@ const ADD_TO_CART = 'ADD_TO_CART';
 const DELETE_FROM_CART = 'DELETE_FROM_CART';
 const UPDATE_ITEM_CART = 'UPDATE_ITEM_CART';
 const CHECKOUT_CART = 'CHECKOUT_CART';
+const GET_ORDERS = 'GET_ORDERS';
 
 /**
  * ACTION CREATORS
@@ -18,11 +19,12 @@ const addingToCart = item => ({type: ADD_TO_CART, item});
 const deleteFromCart = itemId => ({type: DELETE_FROM_CART, itemId});
 const updateItemCart = updated => ({type: UPDATE_ITEM_CART, updated});
 const checkoutCart = order => ({type: CHECKOUT_CART, order});
+const getOrders = orders => ({type: GET_ORDERS, orders});
 
 /**
  * INITIAL STATE
  */
-const defaultItemList = {cart: {items: []}};
+const defaultItemList = {cart: {items: []}, myOrders: []};
 
 /**
  * THUNK CREATORS
@@ -66,13 +68,6 @@ export const updateItem = (
   price
 ) => async dispatch => {
   try {
-    console.log(
-      'Update Item thunk is running',
-      quantity,
-      itemId,
-      orderId,
-      price
-    );
     const {data} = await axios.put('/api/orders/cart', {
       itemId,
       orderId,
@@ -92,6 +87,15 @@ export const checkOut = () => async dispatch => {
     dispatch(checkoutCart(data));
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getMyOrders = () => async dispatch => {
+  try {
+    const {data} = await axios.get('/api/orders/history');
+    dispatch(getOrders(data));
+  } catch (err) {
+    console.error(err);
   }
 };
 
@@ -126,8 +130,12 @@ export default function(state = defaultItemList, action) {
         }
       });
       return {...state, cart: {...state.cart, items: updatedItems}};
+
     case CHECKOUT_CART:
       return {...state, cart: {}};
+
+    case GET_ORDERS:
+      return {...state, myOrders: action.orders};
     default:
       return state;
   }
