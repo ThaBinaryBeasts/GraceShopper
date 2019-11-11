@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {removeItem, updateItem, insideCart} from '../store/order';
+import {removeItem, updateItem, insideCart, checkOut} from '../store/order';
+import {Link} from 'react-router-dom';
 
 //local storage
 import axios from 'axios';
-import item, {getSelectedItem} from '../store/item';
+import {getSelectedItem} from '../store/item';
 import {me} from '../store/user';
 
 export class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: 0,
+      quantity: 1,
       itemList: [],
       guestSubtotal: 0,
-      itemId: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
@@ -23,9 +23,8 @@ export class Cart extends Component {
   async componentDidMount() {
     if (!this.props.user.id) {
       await this.getItemsFromLS();
-    } else {
-      await this.props.insideCart();
     }
+    await this.props.insideCart();
   }
 
   handleChange(e) {
@@ -71,9 +70,6 @@ export class Cart extends Component {
   async handleClick(itemId, orderId, quantity, price) {
     await this.props.updateItem(itemId, orderId, quantity, price);
     await this.props.insideCart();
-    this.setState({
-      itemId: itemId
-    });
   }
 
   async getItemsFromLS() {
@@ -159,6 +155,15 @@ export class Cart extends Component {
                 ) : null
               ) : null
             ) : null}
+            <Link to="/cart/checkout">
+              <button
+                className="checkOut"
+                type="submit"
+                onClick={this.props.checkOut}
+              >
+                Checkout
+              </button>
+            </Link>
           </div>
         ) : localStorage.length ? (
           <div>
@@ -209,7 +214,8 @@ const mapDispatchToProps = dispatch => {
     updateItem: (itemId, orderId, quantity, price) =>
       dispatch(updateItem(itemId, orderId, quantity, price)),
     getSelectedItem: id => dispatch(getSelectedItem(id)),
-    me: () => dispatch(me())
+    me: () => dispatch(me()),
+    checkOut: () => dispatch(checkOut())
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

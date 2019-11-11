@@ -8,6 +8,7 @@ const IN_CART = 'IN_CART';
 const ADD_TO_CART = 'ADD_TO_CART';
 const DELETE_FROM_CART = 'DELETE_FROM_CART';
 const UPDATE_ITEM_CART = 'UPDATE_ITEM_CART';
+const CHECKOUT_CART = 'CHECKOUT_CART';
 
 /**
  * ACTION CREATORS
@@ -16,6 +17,7 @@ const inCart = cart => ({type: IN_CART, cart});
 const addingToCart = item => ({type: ADD_TO_CART, item});
 const deleteFromCart = itemId => ({type: DELETE_FROM_CART, itemId});
 const updateItemCart = updated => ({type: UPDATE_ITEM_CART, updated});
+const checkoutCart = order => ({type: CHECKOUT_CART, order});
 
 /**
  * INITIAL STATE
@@ -84,6 +86,15 @@ export const updateItem = (
   }
 };
 
+export const checkOut = () => async dispatch => {
+  try {
+    const {data} = await axios.put('/api/orders/cart/checkout');
+    dispatch(checkoutCart(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 /**
  * REDUCER
  */
@@ -115,6 +126,8 @@ export default function(state = defaultItemList, action) {
         }
       });
       return {...state, cart: {...state.cart, items: updatedItems}};
+    case CHECKOUT_CART:
+      return {...state, cart: {}};
     default:
       return state;
   }
