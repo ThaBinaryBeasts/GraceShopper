@@ -13,7 +13,8 @@ export class Cart extends Component {
     super(props);
     this.state = {
       quantity: 1,
-      itemList: []
+      itemList: [],
+      guestSubtotal: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
@@ -33,8 +34,37 @@ export class Cart extends Component {
     });
   }
 
-  deleteItem(itemId, orderId) {
-    this.props.removeItem(itemId, orderId);
+  async deleteItem(itemId, orderId) {
+    if (!this.props.user.id) {
+      const cart = JSON.parse(localStorage.getItem('cart'));
+      delete cart[itemId];
+      localStorage.setItem('cart', JSON.stringify(cart));
+      console.log('inside delete', cart);
+      if (!Object.keys(cart).length) {
+        this.setState({
+          ...this.state,
+          itemList: [],
+          guestSubtotal: 0
+        });
+      } else {
+        let subtotal = 0;
+        let newItemList = [];
+        for (let itemID in cart) {
+          let {data} = await axios.get(`/api/items/${itemID}`);
+          data.quantity = cart[itemID];
+          data.total = data.price * data.quantity;
+          newItemList.push(data);
+          subtotal += data.total;
+          this.setState({
+            ...this.state,
+            itemList: newItemList,
+            guestSubtotal: subtotal
+          });
+        }
+      }
+    } else {
+      this.props.removeItem(itemId, orderId);
+    }
   }
 
   async handleClick(itemId, orderId, quantity, price) {
@@ -44,12 +74,19 @@ export class Cart extends Component {
 
   async getItemsFromLS() {
     const cart = JSON.parse(localStorage.getItem('cart'));
+    let subtotal = 0;
+    // eslint-disable-next-line guard-for-in
     for (let itemId in cart) {
       let {data} = await axios.get(`/api/items/${itemId}`);
       data.quantity = cart[itemId];
       data.total = data.price * data.quantity;
       const newitemList = [...this.state.itemList, data];
-      this.setState({itemList: newitemList});
+      subtotal += data.total;
+      this.setState({
+        ...this.state,
+        itemList: newitemList,
+        guestSubtotal: subtotal
+      });
     }
   }
 
@@ -81,7 +118,7 @@ export class Cart extends Component {
                             <img src={item.imageUrl} width={150} />
                           </p>
                           <h2>{item.name}</h2>
-                          <div>Price: {item.price}</div>
+                          <div>Price: {item.price.toFixed(2)}</div>
                           <div>Qt: {item.itemOrders.quantity}</div>
                           <label>
                             Quantity
@@ -108,13 +145,7 @@ export class Cart extends Component {
                           >
                             Update
                           </button>
-
                           <div> Total: {item.itemOrders.total}</div>
-                          <h1
-                            onClick={() =>
-                              this.props.removeItem(item.id, this.props.cart.id)
-                            }
-                          />
                         </div>
                       );
                     })}
@@ -139,19 +170,28 @@ export class Cart extends Component {
             {this.state.itemList.map(item => {
               return (
                 <div key={item.id}>
+                  {' '}
+                  <button
+                    onClick={() => this.deleteItem(item.id, this.props.cart.id)}
+                  >
+                    <img
+                      src="https://www.clipartwiki.com/clipimg/detail/12-125328_collection-of-free-transparent-transparent-garbage-bin-cartoon.png"
+                      width={30}
+                    />
+                  </button>
                   <img src={item.imageUrl} />
                   <h2>{item.name}</h2>
-                  <div>Price: {item.price}</div>
+                  <div>Price: {item.price.toFixed(2)}</div>
                   <div>Qt: {item.quantity}</div>
                   <div>
                     {' '}
                     Total:<i className="dollar sign icon" />
-                    {item.total}
+                    {item.total.toFixed(2)}
                   </div>
                 </div>
               );
             })}
-            <h2>Total price at cart {this.state.guestSubtotal}</h2>
+            <h2>Total price of cart {this.state.guestSubtotal.toFixed(2)}</h2>
           </div>
         ) : (
           <p>nothing is in your local storage cart!</p>
