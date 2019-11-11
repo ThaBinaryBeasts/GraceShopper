@@ -26,7 +26,6 @@ export class Cart extends Component {
     } else {
       await this.props.insideCart();
     }
-    //this.props.insideCart()
   }
 
   handleChange(e) {
@@ -36,8 +35,37 @@ export class Cart extends Component {
     });
   }
 
-  deleteItem(itemId, orderId) {
-    this.props.removeItem(itemId, orderId);
+  async deleteItem(itemId, orderId) {
+    if (!this.props.user.id) {
+      const cart = JSON.parse(localStorage.getItem('cart'));
+      delete cart[itemId];
+      localStorage.setItem('cart', JSON.stringify(cart));
+      console.log('inside delete', cart);
+      if (!Object.keys(cart).length) {
+        this.setState({
+          ...this.state,
+          itemList: [],
+          guestSubtotal: 0
+        });
+      } else {
+        let subtotal = 0;
+        let newItemList = [];
+        for (let itemID in cart) {
+          let {data} = await axios.get(`/api/items/${itemID}`);
+          data.quantity = cart[itemID];
+          data.total = data.price * data.quantity;
+          newItemList.push(data);
+          subtotal += data.total;
+          this.setState({
+            ...this.state,
+            itemList: newItemList,
+            guestSubtotal: subtotal
+          });
+        }
+      }
+    } else {
+      this.props.removeItem(itemId, orderId);
+    }
   }
 
   async handleClick(itemId, orderId, quantity, price) {
@@ -51,6 +79,7 @@ export class Cart extends Component {
   async getItemsFromLS() {
     const cart = JSON.parse(localStorage.getItem('cart'));
     let subtotal = 0;
+    // eslint-disable-next-line guard-for-in
     for (let itemId in cart) {
       let {data} = await axios.get(`/api/items/${itemId}`);
       data.quantity = cart[itemId];
@@ -120,13 +149,7 @@ export class Cart extends Component {
                           >
                             Update
                           </button>
-
                           <div> Total: {item.itemOrders.total}</div>
-                          <h1
-                            onClick={() =>
-                              this.props.removeItem(item.id, this.props.cart.id)
-                            }
-                          />
                         </div>
                       );
                     })}
@@ -142,6 +165,15 @@ export class Cart extends Component {
             {this.state.itemList.map(item => {
               return (
                 <div key={item.id}>
+                  {' '}
+                  <button
+                    onClick={() => this.deleteItem(item.id, this.props.cart.id)}
+                  >
+                    <img
+                      src="https://www.clipartwiki.com/clipimg/detail/12-125328_collection-of-free-transparent-transparent-garbage-bin-cartoon.png"
+                      width={30}
+                    />
+                  </button>
                   <img src={item.imageUrl} />
                   <h2>{item.name}</h2>
                   <div>Price: {item.price}</div>
