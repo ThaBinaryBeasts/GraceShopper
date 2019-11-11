@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getSelectedItem} from '../store/item';
 import {addToCart} from '../store/order';
+
+//local storage
 import {me} from '../store/user';
 
 export class SingleItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: 0
+      quantity: ''
     };
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -38,8 +40,6 @@ export class SingleItem extends Component {
   }
 
   render() {
-    console.log('props at SINGLE ITEM >>>>>>', this.props);
-    console.log('current STATE >>>>>>', this.state);
     const {name, description, price, imageUrl, stock, region} = this.props.item;
     return (
       <div id="singleItem">

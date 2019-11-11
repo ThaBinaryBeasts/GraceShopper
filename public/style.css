@@ -80,3 +80,31 @@ form div {
   display: flex;
   text-align: center;
 }
+
+.navBar {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: white;
+}
+
+#singleItem > p {
+  color: white;
+}
+
+.allItems {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.itemAll {
+  flex: 1;
+}
+
+.navBarElement {
+  height: 30px;
+}
+
+.itemInCart {
+  color: white;
+}
