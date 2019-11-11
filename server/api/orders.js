@@ -3,14 +3,15 @@ const {ItemOrders, Item, Order} = require('../db/models');
 
 router.get('/cart', async (req, res, next) => {
   try {
-    const item = await Order.findOne({
+    const cart = await Order.findOne({
       where: {
         userId: req.user.id,
         status: 'pending'
       },
-      include: [{model: Item, as: ItemOrders}]
+      // include: [{ model: Item, as: ItemOrders }]
+      include: [{model: Item}]
     });
-    res.send(item);
+    res.send(cart);
   } catch (error) {
     next(error);
   }
@@ -22,8 +23,6 @@ router.put('/cart', async (req, res, next) => {
     const itemId = req.body.itemId;
     const orderId = req.body.orderId;
     const price = req.body.price;
-
-    console.log('params passed to update', quantity, itemId, orderId, price);
 
     const itemOrderToUpdate = await ItemOrders.findOne({
       where: {
@@ -121,6 +120,45 @@ router.delete('/cart/:orderId/:itemId', async (req, res, next) => {
     Order.getTotalOrder(orderId);
 
     res.status(204).send(deleted);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//This is my checkout route.  it does the following:
+//1.
+router.put('/cart/checkout', async (req, res, next) => {
+  try {
+    const cart = await Order.findOne({
+      where: {
+        userId: req.user.id,
+        status: 'pending'
+      },
+      include: [{model: Item, as: ItemOrders}]
+    });
+
+    //loop through items in cart
+    cart.items.forEach(async item => {
+      //update stock in the Item
+      let itemTable = await Item.findByPk(item.id);
+      itemTable.stock = itemTable.stock - item.itemOrders.quantity;
+      await itemTable.save();
+
+      //ipdate purchasePrice in the ItemOrders
+      let itemOrdersTable = await ItemOrders.findOne({
+        where: {
+          itemId: item.id
+        }
+      });
+      itemOrdersTable.purchasePrice = item.price;
+      await itemOrdersTable.save();
+    });
+
+    //Change status to purchased
+    cart.status = 'completed';
+    await cart.save();
+
+    res.send(cart);
   } catch (error) {
     next(error);
   }
