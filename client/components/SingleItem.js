@@ -10,10 +10,12 @@ export class SingleItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: ''
+      quantity: '',
+      toggleOn: false
     };
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleDescription = this.handleDescription.bind(this);
   }
 
   componentDidMount() {
@@ -39,27 +41,43 @@ export class SingleItem extends Component {
     this.setState({quantity: Number(event.target.value)});
   }
 
+  handleDescription() {
+    this.setState({
+      toggleOn: !this.state.toggleOn
+    });
+  }
+
   render() {
     const {name, description, price, imageUrl, stock, region} = this.props.item;
     return (
       <div id="singleItem">
-        <img src={imageUrl} />
         <p>{name}</p>
-        <p>{description}</p>
-        <p>{region}</p>
-        <p>{price}</p>
-        <label>
-          Quantity
-          <select value={this.state.quantity} onChange={this.handleChange}>
-            <option value={0}>Qty 0</option>
-            <option value={1}>Qty 1</option>
-            <option value={2}>Qty 2</option>
-            <option value={3}>Qty 3</option>
-            <option value={4}>Qty 4</option>
-          </select>
-        </label>
+        <img src={imageUrl} width={200} />
+        <p>
+          <button type="submit" onClick={this.handleDescription}>
+            Description
+          </button>
+          {this.state.toggleOn ? <p>{description}</p> : null}
+        </p>
+        <p>Country Of Origin: {region}</p>
+        <p>
+          Price: ${price}
+          <label id="quanColor">
+            Quantity
+            <select value={this.state.quantity} onChange={this.handleChange}>
+              <option value={0}>Choose quantity</option>
+              <option value={1}>Qty 1</option>
+              <option value={2}>Qty 2</option>
+              <option value={3}>Qty 3</option>
+              <option value={4}>Qty 4</option>
+            </select>
+          </label>
+        </p>
         <button type="submit" onClick={this.handleAddToCart}>
-          Add To Cart
+          <img
+            src="https://t4.ftcdn.net/jpg/00/26/12/45/240_F_26124567_sPp9oby9DAjrDlnqZ6iSEriV4DJbWMZF.jpg"
+            width={100}
+          />
         </button>
       </div>
     );

@@ -26,10 +26,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               width={50}
             />
           </Link>
-          <Link to="/catalog">Catalog</Link>
+          <Link to="/catalog" id="catalog">
+            Catalog
+          </Link>
           <Link to="/cart">
             <img
-              src="https://pngriver.com/wp-content/uploads/2018/04/Download-Shopping-Cart-Logo-Png-Image-78016-For-Designing-Projects.png"
+              src="http://iconsetc.com/icons-watermarks/flat-rounded-square-white-on-black/bfa/bfa_shopping-cart/bfa_shopping-cart_flat-rounded-square-white-on-black_512x512.png"
               width={50}
             />
           </Link>
@@ -38,7 +40,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </Link>
         </div>
       ) : (
-        <div id="navBar">
+        <div id="navBarGuest">
           {/* The navbar will show these links before you log in */}
           <Link to="/">
             <img
@@ -57,6 +59,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </Link>
         </div>
       )}
+      <img
+        src="https://thewhiskyclub.com.au/wp-content/themes/MeetGavernWP/images/ornament_down.png"
+        alt="The Whisky Club down ornament black"
+        border="0"
+        id="centerNav"
+      />
     </nav>
     <hr />
   </div>
