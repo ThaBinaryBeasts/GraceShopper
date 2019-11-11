@@ -14,7 +14,7 @@ export class Cart extends Component {
     this.state = {
       quantity: 1,
       itemList: [],
-      guestSubtotal: 0,
+      guestSubtotal: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
@@ -39,7 +39,6 @@ export class Cart extends Component {
       const cart = JSON.parse(localStorage.getItem('cart'));
       delete cart[itemId];
       localStorage.setItem('cart', JSON.stringify(cart));
-      console.log('inside delete', cart);
       if (!Object.keys(cart).length) {
         this.setState({
           ...this.state,
