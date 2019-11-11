@@ -193,7 +193,7 @@ export class Cart extends Component {
             <h2>Total price of cart {this.state.guestSubtotal.toFixed(2)}</h2>
           </div>
         ) : (
-          <p>nothing is in your local storage cart!</p>
+          <h1>Nothing is in your cart!</h1>
         )}
       </div>
     );

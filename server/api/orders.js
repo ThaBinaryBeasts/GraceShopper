@@ -127,6 +127,7 @@ router.delete('/cart/:orderId/:itemId', async (req, res, next) => {
 
 //This is my checkout route.  it does the following:
 //1.
+// Use Promise.all
 router.put('/cart/checkout', async (req, res, next) => {
   try {
     const cart = await Order.findOne({
@@ -136,6 +137,8 @@ router.put('/cart/checkout', async (req, res, next) => {
       },
       include: [{model: Item, as: ItemOrders}]
     });
+
+    // const createNew = await cart.getItems();
 
     //loop through items in cart
     cart.items.forEach(async item => {
