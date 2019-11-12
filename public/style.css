@@ -92,11 +92,15 @@ form div {
     no-repeat center 0;
 }
 
-.navBarGuest {
+#navBarGuest {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  background-color: rgba(116, 49, 49, 0.746);
+  justify-content: space-between;
+  position: relative;
+  background: #020202
+    url(//thewhiskyclub.com.au/wp-content/themes/MeetGavernWP/images/header.jpg)
+    no-repeat center 0;
 }
 
 #singleItem {
@@ -173,4 +177,25 @@ form div {
   padding: 0;
   margin-left: 45%;
   color: black;
+}
+
+#button {
+  width: 5px;
+  height: 5px;
+  margin-left: 35px;
+  display: block;
+  background-color: white;
+  color: white;
+  border: none;
+  outline: none;
+}
+#buttonLinks {
+  width: 5px;
+  height: 5px;
+  margin-left: 35px;
+  display: block;
+  background-color: white;
+  color: white;
+  border: none;
+  outline: none;
 }
