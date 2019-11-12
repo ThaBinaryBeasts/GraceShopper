@@ -19,4 +19,17 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// ONLY UPDATES BY DECREASING ITEM'S STOCK COUNT
+router.put('/:id', async (req, res, next) => {
+  try {
+    const item = await Item.findByPk(req.params.id);
+    item.stock = item.stock - req.body.quantity;
+    await item.save();
+
+    res.send(item);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

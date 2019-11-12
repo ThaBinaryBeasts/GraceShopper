@@ -53,7 +53,7 @@ export const auth = (
 
   try {
     dispatch(getUser(res.data));
-    history.push('/home');
+    history.push('/catalog');
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr);
   }
