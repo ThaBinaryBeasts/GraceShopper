@@ -18,7 +18,7 @@ const inCart = cart => ({type: IN_CART, cart});
 const addingToCart = item => ({type: ADD_TO_CART, item});
 const deleteFromCart = itemId => ({type: DELETE_FROM_CART, itemId});
 const updateItemCart = updated => ({type: UPDATE_ITEM_CART, updated});
-const checkoutCart = order => ({type: CHECKOUT_CART, order});
+const checkoutCart = () => ({type: CHECKOUT_CART});
 const getOrders = orders => ({type: GET_ORDERS, orders});
 
 /**
@@ -81,10 +81,10 @@ export const updateItem = (
   }
 };
 
-export const checkOut = () => async dispatch => {
+export const checkOut = (token, cartTotal) => async dispatch => {
   try {
-    const {data} = await axios.put('/api/orders/cart/checkout');
-    dispatch(checkoutCart(data));
+    await axios.put('/api/orders/cart/checkout', {token, cartTotal});
+    dispatch(checkoutCart());
   } catch (error) {
     console.error(error);
   }
@@ -110,7 +110,7 @@ export default function(state = defaultItemList, action) {
     case ADD_TO_CART:
       return {
         ...state,
-        cart: {...state.cart, items: [...state.cart.items, action.item]}
+        cart: {...state.cart, items: action.item}
       };
 
     case DELETE_FROM_CART:

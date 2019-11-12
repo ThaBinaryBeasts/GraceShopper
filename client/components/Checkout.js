@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import StripeCheckout from 'react-stripe-checkout';
+import {checkOut} from '../store/order';
 
 // Local Storage
 import axios from 'axios';
@@ -13,6 +15,7 @@ export class Checkout extends React.Component {
       itemList: [],
       guestSubtotal: 0
     };
+    this.handleToken = this.handleToken.bind(this);
   }
   async componentDidMount() {
     if (!this.props.user.id) {
@@ -43,6 +46,7 @@ export class Checkout extends React.Component {
   async updateStock() {
     let cart = JSON.parse(localStorage.getItem('cart'));
 
+    // eslint-disable-next-line guard-for-in
     for (let itemId in cart) {
       let {data} = await axios.put(`/api/items/${itemId}`, {
         quantity: cart[itemId]
@@ -51,26 +55,34 @@ export class Checkout extends React.Component {
     localStorage.removeItem('cart');
   }
 
+  handleToken(token) {
+    const cartTotal = this.props.cart.total;
+    this.props.checkOut(token, cartTotal);
+  }
+
   render() {
+    const cartTotal = this.props.cart.total;
     return (
       <div className="checkout">
-        <h1>Your order is on the way</h1>
-        {this.state.itemList.map(item => {
-          return (
-            <div key={item.id}>
-              <img src={item.imageUrl} />
-              <h2>{item.name}</h2>
-              <div>Price: {item.price.toFixed(2)}</div>
-              <div>Qt: {item.quantity}</div>
-              <div>
-                Total:
-                <i className="dollar sign icon" />
-                {item.total.toFixed(2)}
-              </div>
-            </div>
-          );
-        })}
-        <h2>Total price of cart {this.state.guestSubtotal.toFixed(2)}</h2>
+        {this.props.user.id ? (
+          <div>
+            <h1>Case of Whiskey for my boys:</h1>
+            <h3>Total Price · ${cartTotal}</h3>
+          </div>
+        ) : (
+          <div className="checkout">
+            <h1>Your order is on the way</h1>
+
+            <h2>Total price of cart {this.state.guestSubtotal.toFixed(2)}</h2>
+          </div>
+        )}
+        <StripeCheckout
+          stripeKey="pk_test_QKVl0gcbzP4rkY2ona3fa7Up00It2MIOSj"
+          token={this.handleToken}
+          amount={cartTotal}
+          billingAddress
+          shippingAddress
+        />
       </div>
     );
   }
@@ -78,13 +90,15 @@ export class Checkout extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    cart: state.order.cart
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     getSelectedItem: id => dispatch(getSelectedItem(id)),
-    me: () => dispatch(me())
+    me: () => dispatch(me()),
+    checkOut: (token, cartTotal) => dispatch(checkOut(token, cartTotal))
   };
 };
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {removeItem, updateItem, insideCart, checkOut} from '../store/order';
+import {removeItem, updateItem, insideCart} from '../store/order';
 import {Link} from 'react-router-dom';
 
 //local storage
@@ -177,11 +177,7 @@ export class Cart extends Component {
               ) : null
             ) : null}
             <Link to="/cart/checkout">
-              <button
-                className="checkOut"
-                type="submit"
-                onClick={this.props.checkOut}
-              >
+              <button className="checkOut" type="submit">
                 Checkout
               </button>
             </Link>
@@ -266,8 +262,7 @@ const mapDispatchToProps = dispatch => {
     updateItem: (itemId, orderId, quantity, price) =>
       dispatch(updateItem(itemId, orderId, quantity, price)),
     getSelectedItem: id => dispatch(getSelectedItem(id)),
-    me: () => dispatch(me()),
-    checkOut: () => dispatch(checkOut())
+    me: () => dispatch(me())
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
