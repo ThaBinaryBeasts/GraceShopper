@@ -3,7 +3,6 @@ const {User} = require('../db/models');
 module.exports = router;
 router.get('/', async (req, res, next) => {
   try {
-    console.log(req.user.flag);
     if (req.user.flag) {
       res.send(
         await User.findAll({

@@ -111,6 +111,16 @@ export class Cart extends Component {
     }
   }
 
+  async guestCheckout() {
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    // LOOP THRU EACH ITEM IN CART OBJ
+    // MAKE UPDATE REQ TO EACH ONE
+
+    cart = {};
+    localStorage.setItem('cart', JSON.stringify(cart));
+    //REDIRECT TO CHECKOUT PAGE
+  }
+
   render() {
     return (
       <div>
@@ -231,13 +241,19 @@ export class Cart extends Component {
                   </button>
                   <div>
                     {' '}
-                    Total:<i className="dollar sign icon" />
+                    Total:
+                    <i className="dollar sign icon" />
                     {item.total.toFixed(2)}
                   </div>
                 </div>
               );
             })}
             <h2>Total price of cart {this.state.guestSubtotal.toFixed(2)}</h2>
+            <Link to="/cart/checkout">
+              <button className="checkOut" type="submit">
+                Checkout
+              </button>
+            </Link>
           </div>
         ) : (
           <h1>Nothing is in your cart!</h1>

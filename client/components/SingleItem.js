@@ -10,7 +10,7 @@ export class SingleItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: '',
+      quantity: 1,
       toggleOn: false
     };
     this.handleAddToCart = this.handleAddToCart.bind(this);
