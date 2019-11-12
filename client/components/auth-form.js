@@ -74,8 +74,12 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
-      const firstName = evt.target.firstName.value;
-      const lastName = evt.target.lastName.value;
+      let firstName = '';
+      let lastName = '';
+      if (evt.target.firstName && evt.target.lastName) {
+        firstName = evt.target.firstName.value;
+        lastName = evt.target.lastName.value;
+      }
       dispatch(auth(email, password, formName, firstName, lastName));
     }
   };
