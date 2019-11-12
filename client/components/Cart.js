@@ -111,16 +111,6 @@ export class Cart extends Component {
     }
   }
 
-  async guestCheckout() {
-    let cart = JSON.parse(localStorage.getItem('cart'));
-    // LOOP THRU EACH ITEM IN CART OBJ
-    // MAKE UPDATE REQ TO EACH ONE
-
-    cart = {};
-    localStorage.setItem('cart', JSON.stringify(cart));
-    //REDIRECT TO CHECKOUT PAGE
-  }
-
   render() {
     return (
       <div>
