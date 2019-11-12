@@ -6,6 +6,7 @@ import history from '../history';
  */
 const GET_USER = 'GET_USER';
 const REMOVE_USER = 'REMOVE_USER';
+const UPDATE_USER = 'UPDATE_USER';
 
 /**
  * INITIAL STATE
@@ -17,6 +18,7 @@ const defaultUser = {};
  */
 const getUser = user => ({type: GET_USER, user});
 const removeUser = () => ({type: REMOVE_USER});
+const updateUser = upUser => ({type: UPDATE_USER, upUser});
 
 /**
  * THUNK CREATORS
@@ -67,6 +69,17 @@ export const logout = () => async dispatch => {
   }
 };
 
+export const updatingUser = (userId, user) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(`/api/users/update/${userId}`, user);
+      dispatch(updateUser(data));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
 /**
  * REDUCER
  */
@@ -76,6 +89,8 @@ export default function(state = defaultUser, action) {
       return action.user;
     case REMOVE_USER:
       return defaultUser;
+    case UPDATE_USER:
+      return action.upUser;
     default:
       return state;
   }
