@@ -90,6 +90,8 @@ export class Cart extends Component {
   }
 
   render() {
+    console.log('this is props', this.props.cart.items);
+    console.log('this is state', this.state);
     return (
       <div>
         {this.props.user.id ? (
