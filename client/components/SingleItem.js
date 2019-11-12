@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getSelectedItem} from '../store/item';
 import {addToCart} from '../store/order';
+import {Link} from 'react-router-dom';
 
 //local storage
 import {me} from '../store/user';
@@ -11,11 +12,13 @@ export class SingleItem extends Component {
     super(props);
     this.state = {
       quantity: '',
-      toggleOn: false
+      toggleOn: false,
+      changeView: true
     };
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleDescription = this.handleDescription.bind(this);
+    this.changeAdd = this.changeAdd.bind(this);
   }
 
   componentDidMount() {
@@ -24,6 +27,7 @@ export class SingleItem extends Component {
 
   handleAddToCart(event) {
     event.preventDefault();
+    this.changeAdd();
     if (!this.props.user.id) {
       let valObj = JSON.parse(localStorage.getItem('cart')) || {};
       valObj[this.props.item.id] = this.state.quantity;
@@ -35,6 +39,13 @@ export class SingleItem extends Component {
         this.props.item.price
       );
     }
+    this.changeAdd();
+  }
+
+  async changeAdd() {
+    await this.setState({
+      changeView: false
+    });
   }
 
   handleChange(event) {
@@ -55,7 +66,7 @@ export class SingleItem extends Component {
         <img src={imageUrl} width={200} />
         <p>
           <button type="submit" onClick={this.handleDescription}>
-            Description
+            Learn More
           </button>
           {this.state.toggleOn ? <p>{description}</p> : null}
         </p>
@@ -73,12 +84,34 @@ export class SingleItem extends Component {
             </select>
           </label>
         </p>
-        <button type="submit" onClick={this.handleAddToCart}>
-          <img
-            src="https://t4.ftcdn.net/jpg/00/26/12/45/240_F_26124567_sPp9oby9DAjrDlnqZ6iSEriV4DJbWMZF.jpg"
-            width={100}
-          />
-        </button>
+
+        {this.state.changeView ? (
+          <button type="button" onClick={this.handleAddToCart}>
+            <img
+              src="https://t4.ftcdn.net/jpg/00/26/12/45/240_F_26124567_sPp9oby9DAjrDlnqZ6iSEriV4DJbWMZF.jpg"
+              width={100}
+            />
+          </button>
+        ) : (
+          <button type="button">
+            <p>
+              <Link to="/cart">
+                <img
+                  src="https://t3.ftcdn.net/jpg/00/30/30/64/240_F_30306492_54Fq37acp3NBQHlfSkQ1WQrpBS2yyOyt.jpg"
+                  width={100}
+                />
+              </Link>
+            </p>
+            <p>
+              <Link to="/catalog">
+                <img
+                  src="https://funwithcomposers.com/wp-content/uploads/continue_shopping.png"
+                  width={100}
+                />
+              </Link>
+            </p>
+          </button>
+        )}
       </div>
     );
   }

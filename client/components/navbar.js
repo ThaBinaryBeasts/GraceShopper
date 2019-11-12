@@ -46,7 +46,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/">
             <img
               src="https://www.uncommongoods.com/images/items/23900/23960_1_640px.jpg"
-              width={75}
+              width={50}
             />
           </Link>
           <Link to="/catalog">Catalog</Link>
