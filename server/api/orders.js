@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const {ItemOrders, Item, Order} = require('../db/models');
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
+const uuid = require('uuid/v4');
 
 router.get('/cart', async (req, res, next) => {
   try {
@@ -125,11 +127,42 @@ router.delete('/cart/:orderId/:itemId', async (req, res, next) => {
   }
 });
 
-//This is my checkout route.  it does the following:
-//1.
 // Use Promise.all
 router.put('/cart/checkout', async (req, res, next) => {
+  let status;
   try {
+    const {cartTotal, token} = req.body;
+
+    const customer = await stripe.customers.create({
+      email: token.email,
+      source: token.id
+    });
+
+    const idempotency_key = uuid();
+    await stripe.charges.create(
+      {
+        amount: cartTotal * 100,
+        currency: 'usd',
+        customer: customer.id,
+        receipt_email: token.email,
+        description: `Purchased the Case of Whiskey for my boys`,
+        shipping: {
+          name: token.card.name,
+          address: {
+            line1: token.card.address_line1,
+            line2: token.card.address_line2,
+            city: token.card.address_city,
+            country: token.card.address_country,
+            postal_code: token.card.address_zip
+          }
+        }
+      },
+      {
+        idempotency_key
+      }
+    );
+
+    //old route for checkout:
     const cart = await Order.findOne({
       where: {
         userId: req.user.id,
@@ -137,8 +170,6 @@ router.put('/cart/checkout', async (req, res, next) => {
       },
       include: [{model: Item, as: ItemOrders}]
     });
-
-    // const createNew = await cart.getItems();
 
     //loop through items in cart
     cart.items.forEach(async item => {
@@ -161,10 +192,12 @@ router.put('/cart/checkout', async (req, res, next) => {
     cart.status = 'completed';
     await cart.save();
 
-    res.send(cart);
+    status = 'success';
   } catch (error) {
+    status = 'failure';
     next(error);
   }
+  res.json(status);
 });
 
 module.exports = router;
