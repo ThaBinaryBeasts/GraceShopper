@@ -29,7 +29,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/catalog" id="catalog">
             Catalog
           </Link>
-          <Link to="/orders">My Orders</Link>
+          <Link to="/user/me" id="userPage">
+            My Profile
+          </Link>
           <Link to="/cart">
             <img
               src="http://iconsetc.com/icons-watermarks/flat-rounded-square-white-on-black/bfa/bfa_shopping-cart/bfa_shopping-cart_flat-rounded-square-white-on-black_512x512.png"

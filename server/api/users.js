@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const {User} = require('../db/models');
 module.exports = router;
+
 router.get('/', async (req, res, next) => {
   try {
-    console.log(req.user.flag);
     if (req.user.flag) {
       res.send(
         await User.findAll({
@@ -27,6 +27,21 @@ router.get('/:id', async (req, res, next) => {
           }
         })
       );
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/update/:id', async (req, res, next) => {
+  console.log(req.body);
+  console.log(req.params.id);
+  try {
+    if (req.user.id == req.params.id) {
+      const upUser = await User.findByPk(req.params.id);
+      console.log(upUser);
+      await upUser.update(req.body);
+      res.send(upUser);
     }
   } catch (error) {
     next(error);
