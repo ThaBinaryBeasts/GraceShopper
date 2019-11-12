@@ -81,6 +81,7 @@ const mapDispatch = dispatch => {
         lastName = evt.target.lastName.value;
       }
       dispatch(auth(email, password, formName, firstName, lastName));
+
     }
   };
 };
