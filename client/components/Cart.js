@@ -57,7 +57,7 @@ export class Cart extends Component {
           this.setState({
             ...this.state,
             itemList: newItemList,
-            guestSubtotal: subtotal
+            guestSubtotal: subtotal / 100
           });
         }
       }
@@ -139,7 +139,7 @@ export class Cart extends Component {
                             <img src={item.imageUrl} width={150} />
                           </p>
                           <h2>{item.name}</h2>
-                          <div>Price: {item.price.toFixed(2)}</div>
+                          <div>Price: {item.price.toFixed(2) / 100}</div>
                           <div>Qt: {item.itemOrders.quantity}</div>
                           <label>
                             Quantity
@@ -166,12 +166,14 @@ export class Cart extends Component {
                           >
                             Update
                           </button>
-                          <div> Total: {item.itemOrders.total}</div>
+                          <div> Total: {item.itemOrders.total / 100}</div>
                         </div>
                       );
                     })}
 
-                    <h2 id="totalPrice">Total: USD {this.props.cart.total}</h2>
+                    <h2 id="totalPrice">
+                      Total: USD {this.props.cart.total / 100}
+                    </h2>
                   </div>
                 ) : null
               ) : null
@@ -198,7 +200,7 @@ export class Cart extends Component {
                   </button>
                   <img src={item.imageUrl} />
                   <h2>{item.name}</h2>
-                  <div>Price: {item.price.toFixed(2)}</div>
+                  <div>Price: {item.price.toFixed(2) / 100}</div>
                   <div>Qt: {item.quantity}</div>
                   <label>
                     Quantity
@@ -234,7 +236,9 @@ export class Cart extends Component {
                 </div>
               );
             })}
-            <h2>Total price of cart {this.state.guestSubtotal.toFixed(2)}</h2>
+            <h2>
+              Total price of cart {this.state.guestSubtotal.toFixed(2) / 100}
+            </h2>
             <Link to="/cart/checkout">
               <button className="checkOut" type="submit">
                 Checkout

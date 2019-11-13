@@ -72,7 +72,7 @@ export class SingleItem extends Component {
         </p>
         <p>Country Of Origin: {region}</p>
         <p>
-          Price: ${price}
+          Price: ${price / 100}
           <label id="quanColor">
             Quantity
             <select value={this.state.quantity} onChange={this.handleChange}>

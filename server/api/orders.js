@@ -141,7 +141,7 @@ router.put('/cart/checkout', async (req, res, next) => {
     const idempotency_key = uuid();
     await stripe.charges.create(
       {
-        amount: cartTotal * 100,
+        amount: cartTotal,
         currency: 'usd',
         customer: customer.id,
         receipt_email: token.email,
