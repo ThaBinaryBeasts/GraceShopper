@@ -33,7 +33,6 @@ class UpdateUser extends Component {
   render() {
     return (
       <div>
-        <h3>Update Your Profile</h3>
         <form onSubmit={this.handleSubmit}>
           <label>
             <p>

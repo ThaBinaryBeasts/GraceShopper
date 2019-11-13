@@ -129,23 +129,24 @@ form div {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  background-image: url();
+  border-color: black;
 }
 
 .itemAll {
   display: flex;
-  flex: 1;
-  width: 1px;
+  flex-direction: row;
   margin: 10px;
   background-size: 5%;
-  padding: 10px;
+  padding: 20px;
+  border-color: black;
   border-radius: 40px;
-  font-size: 60%;
   background-color: white;
   flex: 0 1 calc(18% - 20px);
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
+  border-style: solid;
+  border-width: 4px;
 }
 
 .navBarElement {
@@ -154,19 +155,19 @@ form div {
 
 .itemInCart {
   display: flex;
-  flex-wrap: wrap;
-  color:  black;
+  flex-direction: row;
+  margin: 10px;
+  background-size: 5%;
+  padding: 2px;
+  border-color: black;
+  border-radius: 40px;
   background-color: white;
-  margin-left: 35%;
-  margin-right: 35%;
-  margin-top: 10%;
-  margin-bottom: 10%;
-  outline-style: solid;
-  padding: 20px;
-  font-family: Optima;
-  font-style: italic;
-  justify-content: center;
+  flex: 0 1 calc(18% - 20px);
+  justify-content: space-evenly;
   align-items: center;
+  text-align: center;
+  border-style: solid;
+  border-width: 4px;
 }
 
 #home {
@@ -224,6 +225,7 @@ form div {
 #personWelcome {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   color:  black;
   background-color: white;
   margin-left: 35%;
@@ -231,10 +233,79 @@ form div {
   margin-top: 10%;
   margin-bottom: 10%;
   outline-style: solid;
-  padding: 20px;
+  padding: 50px;
   font-family: Optima;
   font-style: italic;
   justify-content: center;
   align-items: center;
+  border-style: inset;
+  border-width: 5px;
+}
+
+#orders {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: white;
+  margin-right: 30%;
+  margin-left: 30%;
+  margin-bottom: 5%;
+  justify-content: center;
+  align-items: center;
+  font-family: Optima;
+  font-style: italic;
+  border-style: outset;
+  border-color: black;
+}
+#inCart {
+  font-family: Optima;
+  font-style: italic;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#totalPrice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#total {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+#qty {
+  display: flex;
+  flex-flow: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 12px;
+}
+#checkoutButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 6%;
+}
+
+#guestCart {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  background-size: 5%;
+  padding: 2px;
+  border-color: black;
+  border-radius: 40px;
+  background-color: white;
+  flex: 0 1 calc(18% - 20px);
+  justify-content: space-evenly;
+  align-items: center;
   text-align: center;
+  border-style: solid;
+  border-width: 4px;
 }

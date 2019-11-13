@@ -13,11 +13,11 @@ const Item = db.define('item', {
     defaultValue: 'No Description'
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       min: 0,
-      max: 10000.0
+      max: 1000000
     }
   },
   imageUrl: {

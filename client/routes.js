@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withRouter, Route, Switch} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {Login, Signup, UserHome} from './components';
+import {Login, Signup} from './components';
 import AllItems from './components/AllItems';
 import SingleItem from './components/SingleItem';
 import {me} from './store';
@@ -11,6 +11,7 @@ import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import MyOrders from './components/MyOrders';
 import UserProfile from './components/UserProfile';
+import AfterCheckOut from './components/AfterCheckOut';
 
 /**
  * COMPONENT
@@ -33,6 +34,7 @@ class Routes extends Component {
         <Route exact path="/cart/checkout" component={Checkout} />
         <Route exact path="/orders" component={MyOrders} />
         <Route exact path="/user/me" component={UserProfile} />
+        <Route exact path="/success" component={AfterCheckOut} />
         <Route component={Login} />
       </Switch>
     );

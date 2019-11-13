@@ -6,11 +6,11 @@ const ItemOrders = require('./itemOrders');
 
 const Order = db.define('order', {
   total: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     defaultValue: 0,
     validate: {
       min: 0,
-      max: 500000.0
+      max: 50000000
     }
   },
   status: {

@@ -28,20 +28,17 @@ export class UserProfile extends Component {
     return (
       <div id="personWelcome">
         <h3>Welcome back {this.props.user.email}</h3>
-        <div>
-          <div>
-            <h3>
-              View Order History
-              <Link to="/orders">My Orders</Link>
-            </h3>
-          </div>
-          <div>
-            <button onClick={this.handleClick}>Update Your Profile</button>
-            {this.state.isToggleOn ? (
-              <UpdateUser user={this.props.user} />
-            ) : null}
-          </div>
-        </div>
+
+        <p>
+          <h3>
+            View Order History
+            <Link to="/orders">My Orders</Link>
+          </h3>
+        </p>
+        <p>
+          <button onClick={this.handleClick}>Update Your Profile</button>
+          {this.state.isToggleOn ? <UpdateUser user={this.props.user} /> : null}
+        </p>
       </div>
     );
   }
