@@ -86,14 +86,14 @@ export class SingleItem extends Component {
         </p>
 
         {this.state.changeView ? (
-          <button type="button" onClick={this.handleAddToCart}>
+          <button type="button" id="addButton" onClick={this.handleAddToCart}>
             <img
               src="https://t4.ftcdn.net/jpg/00/26/12/45/240_F_26124567_sPp9oby9DAjrDlnqZ6iSEriV4DJbWMZF.jpg"
               width={100}
             />
           </button>
         ) : (
-          <button type="button">
+          <button type="button" id="cartButton">
             <p>
               <Link to="/cart">
                 <img

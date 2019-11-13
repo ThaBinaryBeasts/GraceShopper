@@ -26,13 +26,15 @@ export class UserProfile extends Component {
   render() {
     console.log(this.props);
     return (
-      <div>
-        <h1 id="personWelcome">Welcome back {this.props.user.email}</h1>
+      <div id="personWelcome">
+        <h3>Welcome back {this.props.user.email}</h3>
         <div>
-          <h1>
-            View Order History
-            <Link to="/orders">My Orders</Link>
-          </h1>
+          <div>
+            <h3>
+              View Order History
+              <Link to="/orders">My Orders</Link>
+            </h3>
+          </div>
           <div>
             <button onClick={this.handleClick}>Update Your Profile</button>
             {this.state.isToggleOn ? (

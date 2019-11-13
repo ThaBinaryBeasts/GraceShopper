@@ -62,14 +62,14 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </Link>
         </div>
       )}
-      <img
-        src="https://thewhiskyclub.com.au/wp-content/themes/MeetGavernWP/images/ornament_down.png"
-        alt="The Whisky Club down ornament black"
-        border="0"
-        id="centerNav"
-      />
+      <div id="centerNav">
+        <img
+          src="https://thewhiskyclub.com.au/wp-content/themes/MeetGavernWP/images/ornament_down.png"
+          alt="The Whisky Club down ornament black"
+          border="0"
+        />
+      </div>
     </nav>
-    <hr />
   </div>
 );
 
