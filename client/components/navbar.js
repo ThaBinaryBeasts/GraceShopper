@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {logout} from '../store';
+import {Menu, Dropdown} from 'semantic-ui-react';
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
@@ -16,60 +17,72 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <span>by Binary Beast</span>
       </p>
     </div>
-    <nav>
+    <div>
       {isLoggedIn ? (
-        <div className="navBar">
-          {/* The navbar will show these links after you log in */}
-          <Link to="/">
-            <img
-              src="https://www.uncommongoods.com/images/items/23900/23960_1_640px.jpg"
-              width={50}
-            />
-          </Link>
-          <Link to="/catalog" id="catalog">
-            Catalog
-          </Link>
-          <Link to="/user/me" id="userPage">
-            My Profile
-          </Link>
-          <Link to="/cart">
-            <img
-              src="http://iconsetc.com/icons-watermarks/flat-rounded-square-white-on-black/bfa/bfa_shopping-cart/bfa_shopping-cart_flat-rounded-square-white-on-black_512x512.png"
-              width={50}
-            />
-          </Link>
-          <Link to="/">
-            <p onClick={handleClick}>Logout</p>
-          </Link>
+        <div>
+          <Menu inverted>
+            <Menu.Item icon="bar" name="Off The Barrel" as={Link} to="/" />
+            <Menu.Item name="catalog" as={Link} to="/catalog" />
+            <Menu.Menu position="right">
+              <Menu.Item name="profileDropdown">
+                <Dropdown icon="user" labeled className="icon">
+                  <Dropdown.Menu>
+                    <Dropdown.Header content={`Hello ${'User'}`} />
+                    <Dropdown.Item name="profile" as={Link} to="/user/me">
+                      Profile
+                    </Dropdown.Item>
+                    <Dropdown.Item name="orders" as={Link} to="/orders">
+                      Order History
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      name="logout"
+                      onClick={handleClick}
+                      as={Link}
+                      to="/"
+                    >
+                      Logout
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
+              <Menu.Item icon="shopping cart" as={Link} to="/cart" />
+            </Menu.Menu>
+          </Menu>
         </div>
       ) : (
-        <div id="navBarGuest">
-          {/* The navbar will show these links before you log in */}
-          <Link to="/">
-            <img
-              src="https://www.uncommongoods.com/images/items/23900/23960_1_640px.jpg"
-              width={50}
-            />
-          </Link>
-          <Link to="/catalog">Catalog</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/cart">
-            <img
-              src="https://pngriver.com/wp-content/uploads/2018/04/Download-Shopping-Cart-Logo-Png-Image-78016-For-Designing-Projects.png"
-              width={50}
-            />
-          </Link>
+        <div>
+          <Menu>
+            <Menu.Item as={Link} to="/">
+              Off The Barrel
+            </Menu.Item>
+            <Menu.Item name="catalog" as={Link} to="/catalog" />
+            <Menu.Menu position="right">
+              <Menu.Item name="profileDropdown">
+                <Dropdown icon="user" labeled className="icon">
+                  <Dropdown.Menu>
+                    <Dropdown.Header content="Hello Guest!" />
+                    <Dropdown.Item name="login" as={Link} to="/login">
+                      Login
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      name="signup"
+                      onClick={handleClick}
+                      as={Link}
+                      to="/signup"
+                    >
+                      Signup
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
+
+              <Menu.Item icon="shopping cart" as={Link} to="/cart" />
+            </Menu.Menu>
+          </Menu>
         </div>
       )}
-      <img
-        src="https://thewhiskyclub.com.au/wp-content/themes/MeetGavernWP/images/ornament_down.png"
-        alt="The Whisky Club down ornament black"
-        border="0"
-        id="centerNav"
-      />
-    </nav>
-    <hr />
+    </div>
+    )
   </div>
 );
 

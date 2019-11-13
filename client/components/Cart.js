@@ -114,6 +114,7 @@ export class Cart extends Component {
   render() {
     return (
       <div>
+        <h1 id="inCart">Your Load Of Whiskey</h1>
         {this.props.user.id ? (
           <div>
             {this.props.cart.id ? (
@@ -139,34 +140,38 @@ export class Cart extends Component {
                             <img src={item.imageUrl} width={150} />
                           </p>
                           <h2>{item.name}</h2>
-                          <div>Price: {item.price.toFixed(2) / 100}</div>
-                          <div>Qt: {item.itemOrders.quantity}</div>
-                          <label>
-                            Quantity
-                            <select
-                              value={this.state.quantity}
-                              onChange={e => this.handleChange(e)}
+                          <div>Price:$ {item.price.toFixed(2) / 100}</div>
+                          <div id="qty">
+                            <div>Qt: {item.itemOrders.quantity}</div>
+                            <label>
+                              <p>
+                                Quantity
+                                <select
+                                  value={this.state.quantity}
+                                  onChange={e => this.handleChange(e)}
+                                >
+                                  <option value={1}>Qty 1</option>
+                                  <option value={2}>Qty 2</option>
+                                  <option value={3}>Qty 3</option>
+                                  <option value={4}>Qty 4</option>
+                                </select>
+                              </p>
+                            </label>
+                            <button
+                              type="submit"
+                              onClick={() =>
+                                this.handleClick(
+                                  item.id,
+                                  this.props.cart.id,
+                                  this.state.quantity,
+                                  item.price
+                                )
+                              }
                             >
-                              <option value={1}>Qty 1</option>
-                              <option value={2}>Qty 2</option>
-                              <option value={3}>Qty 3</option>
-                              <option value={4}>Qty 4</option>
-                            </select>
-                          </label>
-                          <button
-                            type="submit"
-                            onClick={() =>
-                              this.handleClick(
-                                item.id,
-                                this.props.cart.id,
-                                this.state.quantity,
-                                item.price
-                              )
-                            }
-                          >
-                            Update
-                          </button>
-                          <div> Total: {item.itemOrders.total / 100}</div>
+                              Update
+                            </button>
+                          </div>
+                          <div> Total:$ {item.itemOrders.total / 100}</div>
                         </div>
                       );
                     })}
@@ -178,17 +183,19 @@ export class Cart extends Component {
                 ) : null
               ) : null
             ) : null}
-            <Link to="/cart/checkout">
-              <button className="checkOut" type="submit">
-                Checkout
-              </button>
-            </Link>
+            <div id="checkoutButton">
+              <Link to="/cart/checkout">
+                <button className="checkOut" type="submit">
+                  <h3>Checkout</h3>
+                </button>
+              </Link>
+            </div>
           </div>
         ) : localStorage.length ? (
           <div>
             {this.state.itemList.map(item => {
               return (
-                <div key={item.id}>
+                <div key={item.id} id="guestCart">
                   {' '}
                   <button
                     onClick={() => this.deleteItem(item.id, this.props.cart.id)}
@@ -198,7 +205,7 @@ export class Cart extends Component {
                       width={30}
                     />
                   </button>
-                  <img src={item.imageUrl} />
+                  <img src={item.imageUrl} width={150} />
                   <h2>{item.name}</h2>
                   <div>Price: {item.price.toFixed(2) / 100}</div>
                   <div>Qt: {item.quantity}</div>
@@ -231,19 +238,23 @@ export class Cart extends Component {
                     {' '}
                     Total:
                     <i className="dollar sign icon" />
-                    {item.total.toFixed(2)}
+                    {item.total.toFixed(2) / 100}
                   </div>
                 </div>
               );
             })}
-            <h2>
-              Total price of cart {this.state.guestSubtotal.toFixed(2) / 100}
-            </h2>
-            <Link to="/cart/checkout">
-              <button className="checkOut" type="submit">
-                Checkout
-              </button>
-            </Link>
+            <div id="total">
+              <h2>
+                Total price of cart {this.state.guestSubtotal.toFixed(2) / 100}
+              </h2>
+              <div>
+                <Link to="/cart/checkout">
+                  <button className="checkOut" type="submit">
+                    <h3>Checkout</h3>
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
         ) : (
           <h1>Nothing is in your cart!</h1>

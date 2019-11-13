@@ -34,13 +34,15 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.put('/update/:id', async (req, res, next) => {
-  console.log(req.body);
-  console.log(req.params.id);
   try {
     if (req.user.id == req.params.id) {
       const upUser = await User.findByPk(req.params.id);
-      console.log(upUser);
-      await upUser.update(req.body);
+      await upUser.update({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password
+      });
       res.send(upUser);
     }
   } catch (error) {
