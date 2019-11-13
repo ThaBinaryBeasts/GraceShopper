@@ -11,19 +11,19 @@ const ItemOrders = db.define('itemOrders', {
     }
   },
   purchasePrice: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     defaultValue: 0,
     validate: {
       min: 0,
-      max: 5000.0
+      max: 500000
     }
   },
   total: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     defaultValue: 0,
     validate: {
       min: 0,
-      max: 300000
+      max: 30000000
     }
   }
 });

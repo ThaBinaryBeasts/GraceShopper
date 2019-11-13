@@ -14,7 +14,7 @@ export class MyOrders extends Component {
           return (
             <div key={order.id}>
               <p>Order Status: {order.status}</p>
-              <p>Order Total $: {order.total}</p>
+              <p>Order Total $: {order.total / 100}</p>
               {order.items ? (
                 <div className="allItems">
                   {order.items.map(item => {

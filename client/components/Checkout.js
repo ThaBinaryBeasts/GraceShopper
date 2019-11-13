@@ -56,24 +56,29 @@ export class Checkout extends React.Component {
   }
 
   handleToken(token) {
-    const cartTotal = this.props.cart.total;
+    console.log(this.props);
+    const cartTotal =
+      this.props.cart.total || this.state.guestSubtotal.toFixed(2) / 100;
     this.props.checkOut(token, cartTotal);
   }
 
   render() {
-    const cartTotal = this.props.cart.total;
+    const cartTotal =
+      this.props.cart.total || this.state.guestSubtotal.toFixed(2) / 100;
     return (
       <div className="checkout">
         {this.props.user.id ? (
           <div>
             <h1>Case of Whiskey for my boys:</h1>
-            <h3>Total Price · ${cartTotal}</h3>
+            <h3>Total Price · ${cartTotal / 100} </h3>
           </div>
         ) : (
           <div className="checkout">
             <h1>Your order is on the way</h1>
 
-            <h2>Total price of cart {this.state.guestSubtotal.toFixed(2)}</h2>
+            <h2>
+              Total price of cart {this.state.guestSubtotal.toFixed(2) / 100}
+            </h2>
           </div>
         )}
         <StripeCheckout

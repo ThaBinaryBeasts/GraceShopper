@@ -1,5 +1,6 @@
 /* eslint-disable no-case-declarations */
 import axios from 'axios';
+import history from '../history';
 
 /**
  * ACTION TYPES
@@ -85,6 +86,7 @@ export const checkOut = (token, cartTotal) => async dispatch => {
   try {
     await axios.put('/api/orders/cart/checkout', {token, cartTotal});
     dispatch(checkoutCart());
+    history.push('/success');
   } catch (error) {
     console.error(error);
   }
