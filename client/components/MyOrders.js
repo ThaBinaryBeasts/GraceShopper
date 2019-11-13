@@ -18,7 +18,6 @@ export class MyOrders extends Component {
           return (
             <div key={order.id} id="orders">
               <h3>Order Status: {order.status}</h3>
-
               {order.items ? (
                 <div className="allItems">
                   {order.items.map(item => {
