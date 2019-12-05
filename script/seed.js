@@ -91,8 +91,7 @@ async function seed() {
       description:
         'One of the great classics from Islay. Remarkably balanced, with very dry and assertive flavors offset by the sweetness of Sherry oak. Complex, full-bodied, smoky, peaty tastes combine with a salty tang',
       price: 8999,
-      imageUrl:
-        'https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/h79/h54/11428594024478.png',
+      imageUrl: 'https://i.imgur.com/iK3spVI.png',
       stock: 99,
       region: 'Scotland'
     }),
@@ -226,12 +225,11 @@ async function seed() {
       region: 'Japan'
     }),
     Item.create({
-      name: 'Carinou Crossing Canadian Whiskey',
+      name: 'Caribou Crossing Canadian Whiskey',
       description:
         'Single barrel Whisky. Fragrant with vanilla and honey; smooth and silky, with toasty oak and mellow notes of caramel and spice; lovely depth on a long, balanced finish',
       price: 4999,
-      imageUrl:
-        'https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/h1f/h34/8812350275614.png',
+      imageUrl: 'https://i.imgur.com/fkYs5YQ.png',
       stock: 99,
       region: 'Canada'
     }),
@@ -250,8 +248,7 @@ async function seed() {
       description:
         'Handcrafted unique blend that includes the final batch of whiskies from renowned LaSalle distillery. A sophisticated blend of dried fruits and honey in a harmonious balance with spicy notes of Canadian rye, finishing in a lovely taste of raisins, cocoa and brown sugar.',
       price: 14999,
-      imageUrl:
-        'https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/h51/h5a/11428588847134.png',
+      imageUrl: 'https://i.imgur.com/kIXjxlH.png',
       stock: 99,
       region: 'Canada'
     }),
